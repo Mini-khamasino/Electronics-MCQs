@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electronics II — MCQ Practice</title>
+    <meta name="description" content="Interactive Electronics II MCQ practice app with BJT, FET, MOSFET questions. Instant feedback and revision mode.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Ambient background blobs -->
+    <div class="ambient-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Top navigation bar -->
+    <nav id="navbar">
+        <div class="nav-left">
+            <div class="logo">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">ElectroQuiz</span>
+            </div>
+        </div>
+        <div class="nav-center">
+            <button class="nav-tab active" data-view="practice" id="nav-practice">
+                <span class="tab-icon">📝</span> Practice
+            </button>
+            <button class="nav-tab" data-view="review" id="nav-review">
+                <span class="tab-icon">🔄</span> Review Mistakes
+                <span class="badge" id="mistakes-badge" style="display:none;">0</span>
+            </button>
+            <button class="nav-tab" data-view="stats" id="nav-stats">
+                <span class="tab-icon">📊</span> Stats
+            </button>
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn" id="theme-toggle" title="Toggle theme">🌙</button>
+        </div>
+    </nav>
+
+    <!-- Main content area -->
+    <main id="app">
+
+        <!-- ==================== PRACTICE VIEW ==================== -->
+        <section id="view-practice" class="view active">
+            <!-- Topic selector -->
+            <div class="topic-selector" id="topic-selector">
+                <h1 class="section-title">Choose a Topic</h1>
+                <p class="section-subtitle">Select a category to start practicing</p>
+                <div class="topic-grid">
+                    <button class="topic-card" data-topic="sheet1p1" id="topic-sheet1p1">
+                        <div class="topic-icon">🔌</div>
+                        <h3>BJT Fundamentals</h3>
+                        <p>Bipolar Junction Transistors — biasing, configurations, small-signal analysis</p>
+                        <div class="topic-meta">
+                            <span class="q-count">42 Questions</span>
+                            <span class="progress-pill" id="progress-sheet1p1">0%</span>
+                        </div>
+                    </button>
+                    <button class="topic-card" data-topic="sheet1p2" id="topic-sheet1p2">
+                        <div class="topic-icon">📡</div>
+                        <h3>CC & CB Amplifiers</h3>
+                        <p>Common Collector & Common Base — voltage gain, impedance, buffers</p>
+                        <div class="topic-meta">
+                            <span class="q-count">42 Questions</span>
+                            <span class="progress-pill" id="progress-sheet1p2">0%</span>
+                        </div>
+                    </button>
+                    <button class="topic-card" data-topic="sheet2p1" id="topic-sheet2p1">
+                        <div class="topic-icon">🧪</div>
+                        <h3>FET & MOSFET</h3>
+                        <p>Field-Effect Transistors — JFET, MOSFET, biasing, transconductance</p>
+                        <div class="topic-meta">
+                            <span class="q-count">44 Questions</span>
+                            <span class="progress-pill" id="progress-sheet2p1">0%</span>
+                        </div>
+                    </button>
+                    <button class="topic-card" data-topic="all" id="topic-all">
+                        <div class="topic-icon">🎯</div>
+                        <h3>All Questions</h3>
+                        <p>Mixed practice — all 128 MCQs shuffled randomly</p>
+                        <div class="topic-meta">
+                            <span class="q-count">128 Questions</span>
+                            <span class="progress-pill" id="progress-all">0%</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz area (hidden initially) -->
+            <div class="quiz-area" id="quiz-area" style="display:none;">
+                <div class="quiz-header">
+                    <button class="back-btn" id="back-to-topics">
+                        <span>←</span> Topics
+                    </button>
+                    <div class="quiz-progress-bar">
+                        <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+                    </div>
+                    <div class="quiz-counter" id="quiz-counter">1 / 42</div>
+                </div>
+
+                <div class="question-card" id="question-card">
+                    <div class="question-number" id="question-number">Question 1</div>
+                    <h2 class="question-text" id="question-text"></h2>
+                    <div class="options-list" id="options-list"></div>
+                    <div class="feedback-bar" id="feedback-bar" style="display:none;">
+                        <div class="feedback-icon" id="feedback-icon"></div>
+                        <div class="feedback-text" id="feedback-text"></div>
+                    </div>
+                </div>
+
+                <div class="quiz-nav">
+                    <button class="btn btn-secondary" id="btn-prev" disabled>← Previous</button>
+                    <button class="btn btn-primary" id="btn-next">Next →</button>
+                </div>
+
+                <!-- Results screen -->
+                <div class="results-screen" id="results-screen" style="display:none;">
+                    <div class="results-card">
+                        <div class="results-emoji" id="results-emoji">🎉</div>
+                        <h2 class="results-title" id="results-title">Quiz Complete!</h2>
+                        <div class="results-score">
+                            <div class="score-circle" id="score-circle">
+                                <svg viewBox="0 0 120 120">
+                                    <circle class="score-bg" cx="60" cy="60" r="52"></circle>
+                                    <circle class="score-fill" id="score-fill" cx="60" cy="60" r="52"></circle>
+                                </svg>
+                                <span class="score-text" id="score-text">0%</span>
+                            </div>
+                        </div>
+                        <div class="results-stats">
+                            <div class="stat-item correct">
+                                <span class="stat-num" id="stat-correct">0</span>
+                                <span class="stat-label">Correct</span>
+                            </div>
+                            <div class="stat-item wrong">
+                                <span class="stat-num" id="stat-wrong">0</span>
+                                <span class="stat-label">Wrong</span>
+                            </div>
+                            <div class="stat-item skipped">
+                                <span class="stat-num" id="stat-skipped">0</span>
+                                <span class="stat-label">Skipped</span>
+                            </div>
+                        </div>
+                        <div class="results-actions">
+                            <button class="btn btn-secondary" id="btn-review-mistakes">Review Mistakes</button>
+                            <button class="btn btn-primary" id="btn-retry">Try Again</button>
+                            <button class="btn btn-ghost" id="btn-back-home">Back to Topics</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== REVIEW VIEW ==================== -->
+        <section id="view-review" class="view">
+            <div class="review-container">
+                <h1 class="section-title">Review Mistakes</h1>
+                <p class="section-subtitle" id="review-subtitle">Questions you got wrong are saved here for revision</p>
+                
+                <div class="review-controls">
+                    <button class="btn btn-primary" id="btn-practice-mistakes" style="display:none;">
+                        🔄 Practice All Mistakes
+                    </button>
+                    <button class="btn btn-danger" id="btn-clear-mistakes" style="display:none;">
+                        🗑️ Clear All
+                    </button>
+                </div>
+
+                <div class="review-list" id="review-list">
+                    <div class="empty-state" id="review-empty">
+                        <div class="empty-icon">✅</div>
+                        <h3>No mistakes yet!</h3>
+                        <p>Start practicing and any wrong answers will appear here for revision.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== STATS VIEW ==================== -->
+        <section id="view-stats" class="view">
+            <div class="stats-container">
+                <h1 class="section-title">Your Statistics</h1>
+                <p class="section-subtitle">Track your learning progress</p>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-card-icon">📝</div>
+                        <div class="stat-card-value" id="total-attempted">0</div>
+                        <div class="stat-card-label">Questions Attempted</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-icon">✅</div>
+                        <div class="stat-card-value" id="total-correct">0</div>
+                        <div class="stat-card-label">Correct Answers</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-icon">📈</div>
+                        <div class="stat-card-value" id="overall-accuracy">0%</div>
+                        <div class="stat-card-label">Overall Accuracy</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-icon">🔥</div>
+                        <div class="stat-card-value" id="best-streak">0</div>
+                        <div class="stat-card-label">Best Streak</div>
+                    </div>
+                </div>
+
+                <h2 class="subsection-title">Topic Breakdown</h2>
+                <div class="topic-stats" id="topic-stats"></div>
+
+                <div class="stats-actions">
+                    <button class="btn btn-danger" id="btn-reset-stats">🗑️ Reset All Data</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="questions.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
