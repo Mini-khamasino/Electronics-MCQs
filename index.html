@@ -18,6 +18,44 @@
         <div class="blob blob-3"></div>
     </div>
 
+    <!-- ==================== LOGIN / SIGNUP SCREEN ==================== -->
+    <div id="auth-screen" class="auth-overlay">
+        <div class="auth-card">
+            <div class="auth-logo">🎓</div>
+            <h1 class="auth-title">Welcome to MultiQuiz</h1>
+            <p class="auth-subtitle">Sign in to track your progress and compete with classmates</p>
+
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="auth-tab-login">Sign In</button>
+                <button class="auth-tab" id="auth-tab-signup">Sign Up</button>
+            </div>
+
+            <!-- Sign In Form -->
+            <form id="login-form" class="auth-form">
+                <div class="auth-field">
+                    <label for="login-id">Student ID or Phone Number</label>
+                    <input type="text" id="login-id" placeholder="e.g. 2024001 or 01012345678" autocomplete="username" required />
+                </div>
+                <button type="submit" class="btn btn-primary auth-submit">Sign In →</button>
+                <p class="auth-error" id="login-error"></p>
+            </form>
+
+            <!-- Sign Up Form -->
+            <form id="signup-form" class="auth-form" style="display:none;">
+                <div class="auth-field">
+                    <label for="signup-name">Your Name</label>
+                    <input type="text" id="signup-name" placeholder="e.g. Ahmed Mohamed" required />
+                </div>
+                <div class="auth-field">
+                    <label for="signup-id">Student ID or Phone Number</label>
+                    <input type="text" id="signup-id" placeholder="e.g. 2024001 or 01012345678" required />
+                </div>
+                <button type="submit" class="btn btn-primary auth-submit">Create Account →</button>
+                <p class="auth-error" id="signup-error"></p>
+            </form>
+        </div>
+    </div>
+
     <!-- Top navigation bar -->
     <nav id="navbar">
         <div class="nav-left">
@@ -42,6 +80,18 @@
             </button>
         </div>
         <div class="nav-right">
+            <div class="user-badge" id="user-badge" style="display:none;">
+                <span class="user-avatar" id="user-avatar">A</span>
+                <span class="user-name" id="user-name">User</span>
+                <button class="user-menu-btn" id="user-menu-btn">▾</button>
+            </div>
+            <div class="user-dropdown" id="user-dropdown" style="display:none;">
+                <div class="user-dropdown-header" id="user-dropdown-header">Signed in as</div>
+                <div class="user-dropdown-id" id="user-dropdown-id">ID: ...</div>
+                <hr class="user-dropdown-divider" />
+                <button class="user-dropdown-item" id="btn-switch-user">🔄 Switch User</button>
+                <button class="user-dropdown-item danger" id="btn-logout">🚪 Sign Out</button>
+            </div>
             <button class="icon-btn" id="theme-toggle" title="Toggle theme">🌙</button>
         </div>
     </nav>
@@ -271,6 +321,11 @@
             </div>
         </section>
     </main>
+
+    <!-- Firebase SDK (free CDN — no install needed) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
 
     <script src="subjects.js"></script>
     <script src="app.js"></script>

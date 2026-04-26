@@ -5,12 +5,24 @@
 (function () {
   "use strict";
 
+  // ── Firebase Init ────────────────────────────────────────
+  let db = null;
+  let currentUser = null; // { uid, name, id }
+  try {
+    if (typeof FIREBASE_CONFIG !== 'undefined' && FIREBASE_CONFIG.apiKey !== 'YOUR_API_KEY') {
+      firebase.initializeApp(FIREBASE_CONFIG);
+      db = firebase.firestore();
+    }
+  } catch (e) { console.warn('Firebase init skipped:', e); }
+
   // ── Storage Keys ─────────────────────────────────────────
   const STORAGE_KEYS = {
     mistakes: "multiquiz_mistakes",
     stats: "multiquiz_stats",
     theme: "multiquiz_theme",
-    lastSubject: "multiquiz_last_subject"
+    lastSubject: "multiquiz_last_subject",
+    currentUser: "multiquiz_current_user",
+    users: "multiquiz_users"
   };
 
   // ── State ────────────────────────────────────────────────
@@ -19,28 +31,23 @@
   let currentTopic = null;
   let currentQuestions = [];
   let currentIndex = 0;
-  let answeredMap = {}; // { questionId: { selected, isCorrect } }
+  let answeredMap = {};
   let isReviewMode = false;
 
   // Calc state
-  let currentMode = "mcq"; // "mcq" or "calc"
+  let currentMode = "mcq";
   let calcQuestions = [];
   let calcIndex = 0;
-  let calcAnswered = {}; // { questionId: { submitted, results } }
+  let calcAnswered = {};
 
   // ── DOM Refs ─────────────────────────────────────────────
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
-  // Nav
   const navTabs = $$(".nav-tab");
   const views = $$(".view");
   const navPractice = $("#nav-practice");
-
-  // Home
   const subjectGrid = $("#subject-grid");
-
-  // Practice
   const topicSelector = $("#topic-selector");
   const topicGrid = $("#topic-grid");
   const quizArea = $("#quiz-area");
@@ -69,17 +76,182 @@
     return a;
   }
 
+  function userKey(key) {
+    const uid = currentUser?.uid || 'guest';
+    return `${uid}_${key}`;
+  }
+
   function loadJSON(key) {
-    try {
-      return JSON.parse(localStorage.getItem(key)) || null;
-    } catch {
-      return null;
-    }
+    try { return JSON.parse(localStorage.getItem(userKey(key))) || null; }
+    catch { return null; }
   }
 
   function saveJSON(key, data) {
-    localStorage.setItem(key, JSON.stringify(data));
+    localStorage.setItem(userKey(key), JSON.stringify(data));
+    syncToCloud(key, data);
   }
+
+  // ── Cloud Sync (Firestore) ──────────────────────────────
+  let syncDebounce = {};
+  function syncToCloud(key, data) {
+    if (!db || !currentUser) return;
+    clearTimeout(syncDebounce[key]);
+    syncDebounce[key] = setTimeout(() => {
+      db.collection('users').doc(currentUser.uid).set(
+        { [key]: JSON.stringify(data), updatedAt: firebase.firestore.FieldValue.serverTimestamp() },
+        { merge: true }
+      ).catch(e => console.warn('Sync error:', e));
+    }, 500);
+  }
+
+  async function pullFromCloud() {
+    if (!db || !currentUser) return;
+    try {
+      const doc = await db.collection('users').doc(currentUser.uid).get();
+      if (doc.exists) {
+        const d = doc.data();
+        // Merge cloud data — cloud wins if it exists
+        ['mistakes', 'stats'].forEach(key => {
+          if (d[key]) {
+            localStorage.setItem(userKey(key), d[key]);
+          }
+        });
+      }
+    } catch (e) { console.warn('Pull error:', e); }
+  }
+
+  // ── Auth System ─────────────────────────────────────────
+  function generateUID(id) {
+    // Simple hash of the ID string for doc key
+    let hash = 0;
+    for (let i = 0; i < id.length; i++) {
+      hash = ((hash << 5) - hash) + id.charCodeAt(i);
+      hash |= 0;
+    }
+    return 'u' + Math.abs(hash).toString(36);
+  }
+
+  function getUsers() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.users)) || {}; }
+    catch { return {}; }
+  }
+
+  function saveUsers(users) {
+    localStorage.setItem(STORAGE_KEYS.users, JSON.stringify(users));
+  }
+
+  async function loginUser(userId) {
+    const users = getUsers();
+    const uid = generateUID(userId);
+    if (!users[uid]) return { error: 'No account found. Sign up first!' };
+    currentUser = users[uid];
+    localStorage.setItem(STORAGE_KEYS.currentUser, JSON.stringify(currentUser));
+    await pullFromCloud();
+    onAuthSuccess();
+    return { ok: true };
+  }
+
+  async function signupUser(name, userId) {
+    const uid = generateUID(userId);
+    const users = getUsers();
+    if (users[uid]) return { error: 'This ID is already registered. Try signing in.' };
+    const user = { uid, name: name.trim(), id: userId.trim(), createdAt: Date.now() };
+    users[uid] = user;
+    saveUsers(users);
+    currentUser = user;
+    localStorage.setItem(STORAGE_KEYS.currentUser, JSON.stringify(currentUser));
+    // Save profile to cloud too
+    if (db) {
+      try {
+        await db.collection('users').doc(uid).set(
+          { profile: JSON.stringify(user), createdAt: firebase.firestore.FieldValue.serverTimestamp() },
+          { merge: true }
+        );
+      } catch (e) { console.warn('Profile sync error:', e); }
+    }
+    onAuthSuccess();
+    return { ok: true };
+  }
+
+  function logoutUser() {
+    currentUser = null;
+    localStorage.removeItem(STORAGE_KEYS.currentUser);
+    showAuthScreen();
+  }
+
+  function showAuthScreen() {
+    $("#auth-screen").classList.remove('hidden');
+    $("#navbar").style.display = 'none';
+    $("#app").style.display = 'none';
+    $("#user-badge").style.display = 'none';
+  }
+
+  function onAuthSuccess() {
+    $("#auth-screen").classList.add('hidden');
+    $("#navbar").style.display = '';
+    $("#app").style.display = '';
+    // Update user badge
+    $("#user-badge").style.display = 'flex';
+    $("#user-avatar").textContent = (currentUser.name || '?')[0].toUpperCase();
+    $("#user-name").textContent = currentUser.name;
+    $("#user-dropdown-header").textContent = currentUser.name;
+    $("#user-dropdown-id").textContent = `ID: ${currentUser.id}`;
+    // Refresh data
+    renderSubjects();
+    updateMistakesBadge();
+  }
+
+  // Auth UI events
+  $("#auth-tab-login").addEventListener('click', () => {
+    $("#auth-tab-login").classList.add('active');
+    $("#auth-tab-signup").classList.remove('active');
+    $("#login-form").style.display = '';
+    $("#signup-form").style.display = 'none';
+  });
+  $("#auth-tab-signup").addEventListener('click', () => {
+    $("#auth-tab-signup").classList.add('active');
+    $("#auth-tab-login").classList.remove('active');
+    $("#signup-form").style.display = '';
+    $("#login-form").style.display = 'none';
+  });
+
+  $("#login-form").addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = $("#login-id").value.trim();
+    if (!id) return;
+    $("#login-error").textContent = '';
+    const res = await loginUser(id);
+    if (res.error) $("#login-error").textContent = res.error;
+  });
+
+  $("#signup-form").addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = $("#signup-name").value.trim();
+    const id = $("#signup-id").value.trim();
+    if (!name || !id) return;
+    $("#signup-error").textContent = '';
+    const res = await signupUser(name, id);
+    if (res.error) $("#signup-error").textContent = res.error;
+  });
+
+  // User badge dropdown
+  $("#user-badge").addEventListener('click', () => {
+    const dd = $("#user-dropdown");
+    dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
+  });
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#user-badge') && !e.target.closest('#user-dropdown')) {
+      $("#user-dropdown").style.display = 'none';
+    }
+  });
+  $("#btn-switch-user").addEventListener('click', () => {
+    $("#user-dropdown").style.display = 'none';
+    logoutUser();
+  });
+  $("#btn-logout").addEventListener('click', () => {
+    $("#user-dropdown").style.display = 'none';
+    logoutUser();
+  });
 
   // ── Theme ────────────────────────────────────────────────
   function initTheme() {
@@ -916,6 +1088,17 @@
 
   // ── Init ─────────────────────────────────────────────────
   initTheme();
-  renderSubjects();
-  updateMistakesBadge();
+
+  // Check if user is already logged in
+  const savedUser = localStorage.getItem(STORAGE_KEYS.currentUser);
+  if (savedUser) {
+    try {
+      currentUser = JSON.parse(savedUser);
+      onAuthSuccess();
+    } catch {
+      showAuthScreen();
+    }
+  } else {
+    showAuthScreen();
+  }
 })();
