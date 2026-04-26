@@ -73,12 +73,24 @@
                         <p class="section-subtitle" id="current-subject-desc">Subject description goes here</p>
                     </div>
                 </div>
+
+                <!-- Mode toggle for MCQ / Calculations -->
+                <div class="mode-toggle" id="mode-toggle" style="display:none;">
+                    <button class="mode-btn active" id="mode-mcq" data-mode="mcq">📝 MCQs</button>
+                    <button class="mode-btn" id="mode-calc" data-mode="calc">🧮 Calculations</button>
+                </div>
+
                 <div class="topic-grid" id="topic-grid">
                     <!-- Topics will be injected here -->
                 </div>
+
+                <!-- Calc topic grid (separate, shown when calc mode active) -->
+                <div class="topic-grid" id="calc-topic-grid" style="display:none;">
+                    <!-- Calc topics injected here -->
+                </div>
             </div>
 
-            <!-- Quiz area (hidden initially) -->
+            <!-- MCQ Quiz area (hidden initially) -->
             <div class="quiz-area" id="quiz-area" style="display:none;">
                 <div class="quiz-header">
                     <button class="back-btn" id="back-to-topics">
@@ -139,6 +151,59 @@
                             <button class="btn btn-ghost" id="btn-back-home">Back to Topics</button>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- ==================== CALCULATION QUIZ AREA ==================== -->
+            <div class="calc-quiz-area" id="calc-quiz-area" style="display:none;">
+                <div class="quiz-header">
+                    <button class="back-btn" id="calc-back-to-topics">
+                        <span>←</span> Topics
+                    </button>
+                    <div class="quiz-progress-bar">
+                        <div class="quiz-progress-fill" id="calc-progress-fill"></div>
+                    </div>
+                    <div class="quiz-counter" id="calc-counter">1 / 4</div>
+                </div>
+
+                <div class="calc-question-card" id="calc-question-card">
+                    <div class="question-number" id="calc-question-number">Problem 1</div>
+                    <h2 class="question-text" id="calc-question-title"></h2>
+                    <p class="calc-description" id="calc-description"></p>
+
+                    <!-- Question screenshot -->
+                    <div class="calc-image-container" id="calc-question-img-container">
+                        <img id="calc-question-img" src="" alt="Question diagram" class="calc-image" />
+                    </div>
+
+                    <!-- Input fields for each required value -->
+                    <div class="calc-fields" id="calc-fields">
+                        <!-- Fields injected dynamically -->
+                    </div>
+
+                    <div class="calc-actions">
+                        <button class="btn btn-primary" id="calc-submit">✅ Submit Answer</button>
+                        <button class="btn btn-secondary" id="calc-show-solution" style="display:none;">📖 View Solution</button>
+                    </div>
+
+                    <!-- Solution screenshots (shown after submit) -->
+                    <div class="calc-solution-container" id="calc-solution-container" style="display:none;">
+                        <h3 class="calc-solution-title">📋 Full Solution</h3>
+                        <div id="calc-solution-imgs">
+                            <!-- Solution images injected here -->
+                        </div>
+                    </div>
+
+                    <!-- Feedback -->
+                    <div class="calc-feedback" id="calc-feedback" style="display:none;">
+                        <div class="calc-feedback-header" id="calc-feedback-header"></div>
+                        <div class="calc-feedback-details" id="calc-feedback-details"></div>
+                    </div>
+                </div>
+
+                <div class="quiz-nav">
+                    <button class="btn btn-secondary" id="calc-prev" disabled>← Previous</button>
+                    <button class="btn btn-primary" id="calc-next">Next →</button>
                 </div>
             </div>
         </section>

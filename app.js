@@ -22,6 +22,12 @@
   let answeredMap = {}; // { questionId: { selected, isCorrect } }
   let isReviewMode = false;
 
+  // Calc state
+  let currentMode = "mcq"; // "mcq" or "calc"
+  let calcQuestions = [];
+  let calcIndex = 0;
+  let calcAnswered = {}; // { questionId: { submitted, results } }
+
   // ── DOM Refs ─────────────────────────────────────────────
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
@@ -142,27 +148,61 @@
     currentSubject = subject;
     localStorage.setItem(STORAGE_KEYS.lastSubject, subject.id);
     
-    // Show loading state if needed
-    // In a real app we'd fetch questions.js here. 
-    // Since it's a script tag that defines global QUESTIONS, we need to load it.
-    
-    // Remove old script if exists
+    // Remove old scripts
     const oldScript = document.getElementById("subject-data-script");
     if (oldScript) oldScript.remove();
+    const oldCalcScript = document.getElementById("subject-calc-script");
+    if (oldCalcScript) oldCalcScript.remove();
 
+    // Load MCQ data
     const script = document.createElement("script");
     script.id = "subject-data-script";
     script.src = subject.dataFile;
     
     script.onload = () => {
-      $("#current-subject-name").textContent = subject.name;
-      $("#current-subject-desc").textContent = subject.description;
-      navPractice.style.display = "inline-flex";
-      switchView("practice");
-      renderTopics();
+      // Load calc data if available
+      if (subject.hasCalc && subject.calcDataFile) {
+        const calcScript = document.createElement("script");
+        calcScript.id = "subject-calc-script";
+        calcScript.src = subject.calcDataFile;
+        calcScript.onload = () => {
+          showSubjectView(subject);
+        };
+        calcScript.onerror = () => {
+          // If calc data fails to load, just continue without it
+          showSubjectView(subject);
+        };
+        document.body.appendChild(calcScript);
+      } else {
+        showSubjectView(subject);
+      }
     };
     
     document.body.appendChild(script);
+  }
+
+  function showSubjectView(subject) {
+    $("#current-subject-name").textContent = subject.name;
+    $("#current-subject-desc").textContent = subject.description;
+    navPractice.style.display = "inline-flex";
+    currentMode = "mcq";
+    switchView("practice");
+    renderTopics();
+    renderCalcTopics();
+    
+    // Show/hide mode toggle
+    const modeToggle = $("#mode-toggle");
+    if (subject.hasCalc && typeof CALC_QUESTIONS !== 'undefined') {
+      modeToggle.style.display = "flex";
+    } else {
+      modeToggle.style.display = "none";
+    }
+    
+    // Reset mode buttons
+    $("#mode-mcq").classList.add("active");
+    $("#mode-calc").classList.remove("active");
+    $("#topic-grid").style.display = "grid";
+    $("#calc-topic-grid").style.display = "none";
   }
 
   function renderTopics() {
@@ -222,6 +262,23 @@
 
     renderQuestion();
   }
+
+  // ── Mode Toggle ──────────────────────────────────────────
+  $("#mode-mcq").addEventListener("click", () => {
+    currentMode = "mcq";
+    $("#mode-mcq").classList.add("active");
+    $("#mode-calc").classList.remove("active");
+    $("#topic-grid").style.display = "grid";
+    $("#calc-topic-grid").style.display = "none";
+  });
+
+  $("#mode-calc").addEventListener("click", () => {
+    currentMode = "calc";
+    $("#mode-calc").classList.add("active");
+    $("#mode-mcq").classList.remove("active");
+    $("#topic-grid").style.display = "none";
+    $("#calc-topic-grid").style.display = "grid";
+  });
 
   // ── Navigation Buttons ───────────────────────────────────
   backToTopics.addEventListener("click", () => {
@@ -646,6 +703,202 @@
     }
     requestAnimationFrame(animate);
   }
+
+  // ── Calculation Quiz System ──────────────────────────────
+  function renderCalcTopics() {
+    const grid = $("#calc-topic-grid");
+    grid.innerHTML = "";
+    if (typeof CALC_QUESTIONS === 'undefined' || typeof CALC_TOPIC_META === 'undefined') return;
+
+    Object.keys(CALC_QUESTIONS).forEach(key => {
+      const meta = CALC_TOPIC_META[key] || { name: key, icon: "🧮" };
+      const count = CALC_QUESTIONS[key].length;
+      const card = document.createElement("button");
+      card.className = "topic-card";
+      card.innerHTML = `
+        <div class="topic-icon">${meta.icon}</div>
+        <h3>${meta.name}</h3>
+        <p>${meta.sheet || ""}</p>
+        <div class="topic-meta">
+            <span class="q-count">${count} Problem${count !== 1 ? 's' : ''}</span>
+            <span class="progress-pill">🧮</span>
+        </div>
+      `;
+      card.addEventListener("click", () => startCalcQuiz(key));
+      grid.appendChild(card);
+    });
+  }
+
+  function startCalcQuiz(topicKey) {
+    calcQuestions = [...CALC_QUESTIONS[topicKey]];
+    calcIndex = 0;
+    calcAnswered = {};
+
+    topicSelector.style.display = "none";
+    quizArea.style.display = "none";
+    $("#calc-quiz-area").style.display = "block";
+    renderCalcQuestion();
+  }
+
+  function renderCalcQuestion() {
+    const q = calcQuestions[calcIndex];
+    if (!q) return;
+
+    // Header
+    $("#calc-question-number").textContent = `Problem ${calcIndex + 1}`;
+    $("#calc-question-title").textContent = q.title;
+    $("#calc-description").textContent = q.description;
+
+    // Progress
+    const pct = ((calcIndex + 1) / calcQuestions.length) * 100;
+    $("#calc-progress-fill").style.width = `${pct}%`;
+    $("#calc-counter").textContent = `${calcIndex + 1} / ${calcQuestions.length}`;
+
+    // Question image
+    $("#calc-question-img").src = q.questionImg;
+
+    // Input fields
+    const fieldsContainer = $("#calc-fields");
+    fieldsContainer.innerHTML = "";
+    const answered = calcAnswered[q.id];
+
+    q.fields.forEach((field, i) => {
+      const group = document.createElement("div");
+      group.className = "calc-field-group";
+      if (answered) {
+        group.classList.add(answered.results[i] ? "correct" : "wrong");
+      }
+
+      const unitText = field.unit ? ` (${field.unit})` : '';
+      group.innerHTML = `
+        <div class="calc-field-label">
+          ${field.label}
+          <span class="calc-field-unit">${unitText}</span>
+        </div>
+        <input type="text" inputmode="decimal" class="calc-field-input" 
+               id="calc-input-${i}" placeholder="Enter value..." 
+               ${answered ? 'disabled' : ''}
+               value="${answered ? (answered.inputs[i] || '') : ''}" />
+        ${answered ? `<div class="calc-field-result ${answered.results[i] ? 'correct' : 'wrong'}">
+          ${answered.results[i] ? '✓ Correct' : `✗ Expected: ${field.answer} ${field.unit}`}
+        </div>` : ''}
+      `;
+      fieldsContainer.appendChild(group);
+    });
+
+    // Actions
+    $("#calc-submit").style.display = answered ? "none" : "inline-flex";
+    $("#calc-show-solution").style.display = answered ? "inline-flex" : "none";
+
+    // Solution container
+    const solContainer = $("#calc-solution-container");
+    solContainer.style.display = "none";
+    $("#calc-solution-imgs").innerHTML = "";
+
+    // Feedback
+    const feedback = $("#calc-feedback");
+    if (answered) {
+      const correctCount = answered.results.filter(r => r).length;
+      const total = answered.results.length;
+      const allCorrect = correctCount === total;
+      const noneCorrect = correctCount === 0;
+      
+      feedback.style.display = "block";
+      feedback.className = `calc-feedback ${allCorrect ? 'success' : noneCorrect ? 'fail' : 'partial'}`;
+      $("#calc-feedback-header").textContent = allCorrect 
+        ? `🎉 All ${total} values correct!` 
+        : `${correctCount}/${total} values correct`;
+      $("#calc-feedback-details").textContent = allCorrect 
+        ? "Excellent work! You nailed this calculation."
+        : "Review the solution to see the detailed steps.";
+    } else {
+      feedback.style.display = "none";
+    }
+
+    // Nav
+    $("#calc-prev").disabled = calcIndex === 0;
+    $("#calc-next").textContent = calcIndex === calcQuestions.length - 1 ? "Finish 🏁" : "Next →";
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Submit calc answer
+  $("#calc-submit").addEventListener("click", () => {
+    const q = calcQuestions[calcIndex];
+    if (!q || calcAnswered[q.id]) return;
+
+    const inputs = [];
+    const results = [];
+
+    q.fields.forEach((field, i) => {
+      const inputEl = $(`#calc-input-${i}`);
+      const rawVal = inputEl.value.trim();
+      inputs.push(rawVal);
+
+      const numVal = parseFloat(rawVal);
+      if (isNaN(numVal)) {
+        results.push(false);
+      } else {
+        // Tolerance check: either absolute tolerance or percentage
+        const diff = Math.abs(numVal - field.answer);
+        results.push(diff <= field.tolerance);
+      }
+    });
+
+    calcAnswered[q.id] = { inputs, results, submitted: true };
+    renderCalcQuestion();
+  });
+
+  // Show solution
+  $("#calc-show-solution").addEventListener("click", () => {
+    const q = calcQuestions[calcIndex];
+    if (!q) return;
+
+    const solContainer = $("#calc-solution-container");
+    const solImgs = $("#calc-solution-imgs");
+    
+    if (solContainer.style.display === "none") {
+      solContainer.style.display = "block";
+      solImgs.innerHTML = "";
+      q.solutionImgs.forEach(src => {
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = "Solution step";
+        img.loading = "lazy";
+        solImgs.appendChild(img);
+      });
+      $("#calc-show-solution").textContent = "🔼 Hide Solution";
+
+      solContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      solContainer.style.display = "none";
+      $("#calc-show-solution").textContent = "📖 View Solution";
+    }
+  });
+
+  // Calc navigation
+  $("#calc-back-to-topics").addEventListener("click", () => {
+    $("#calc-quiz-area").style.display = "none";
+    topicSelector.style.display = "block";
+  });
+
+  $("#calc-prev").addEventListener("click", () => {
+    if (calcIndex > 0) {
+      calcIndex--;
+      renderCalcQuestion();
+    }
+  });
+
+  $("#calc-next").addEventListener("click", () => {
+    if (calcIndex < calcQuestions.length - 1) {
+      calcIndex++;
+      renderCalcQuestion();
+    } else {
+      // Return to topics
+      $("#calc-quiz-area").style.display = "none";
+      topicSelector.style.display = "block";
+    }
+  });
 
   // ── Keyboard ─────────────────────────────────────────────
   document.addEventListener("keydown", (e) => {

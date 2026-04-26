@@ -501,6 +501,220 @@ body {
   transform: translateX(0);
 }
 
+/* ── Mode Toggle ───────────────────────────────────────── */
+.mode-toggle {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-full);
+  margin-bottom: 32px;
+  width: fit-content;
+}
+
+.mode-btn {
+  background: transparent;
+  border: none;
+  padding: 10px 24px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-main);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.3s var(--ease-out);
+}
+
+.mode-btn.active {
+  background: var(--accent-primary);
+  color: #fff;
+  box-shadow: 0 4px 15px var(--accent-primary-glow);
+}
+
+.mode-btn:hover:not(.active) {
+  color: var(--text-primary);
+  background: var(--glass-bg);
+}
+
+/* ── Calculation Quiz Area ─────────────────────────────── */
+.calc-question-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  margin-bottom: 24px;
+}
+
+.calc-description {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.calc-image-container {
+  margin: 24px 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  background: #fff;
+}
+
+.calc-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.calc-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 28px 0;
+}
+
+.calc-field-group {
+  background: var(--glass-bg);
+  border: 2px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  transition: all 0.3s var(--ease-out);
+}
+
+.calc-field-group:focus-within {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-primary-glow);
+}
+
+.calc-field-group.correct {
+  border-color: var(--success);
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.calc-field-group.wrong {
+  border-color: var(--error);
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.calc-field-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.calc-field-unit {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+}
+
+.calc-field-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 0;
+}
+
+.calc-field-input::placeholder {
+  color: var(--text-tertiary);
+  font-weight: 400;
+}
+
+.calc-field-input:disabled {
+  opacity: 0.7;
+}
+
+.calc-field-result {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.calc-field-result.correct {
+  color: var(--success);
+}
+
+.calc-field-result.wrong {
+  color: var(--error);
+}
+
+.calc-actions {
+  display: flex;
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.calc-solution-container {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 2px solid var(--glass-border);
+}
+
+.calc-solution-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.calc-solution-container img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--glass-border);
+  margin-bottom: 16px;
+  background: #fff;
+}
+
+.calc-feedback {
+  margin-top: 24px;
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--glass-border);
+}
+
+.calc-feedback.success {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: var(--success);
+}
+
+.calc-feedback.partial {
+  background: rgba(245, 158, 11, 0.08);
+  border-color: var(--warning);
+}
+
+.calc-feedback.fail {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: var(--error);
+}
+
+.calc-feedback-header {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.calc-feedback-details {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
 /* ── Quiz Area ──────────────────────────────────────────── */
 .quiz-header {
   display: flex;

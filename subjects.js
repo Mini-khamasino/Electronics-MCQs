@@ -5,7 +5,9 @@ const SUBJECTS = [
     icon: "⚡",
     description: "BJT, FET, MOSFET and Amplifier analysis",
     folder: "Electronics-2",
-    dataFile: "Electronics-2/questions.js"
+    dataFile: "Electronics-2/questions.js",
+    calcDataFile: "Electronics-2/calc-questions.js",
+    hasCalc: true
   },
   {
     id: "law",
@@ -13,6 +15,7 @@ const SUBJECTS = [
     icon: "⚖️",
     description: "Legal principles and human rights regulations",
     folder: "Law",
-    dataFile: "Law/questions.js"
+    dataFile: "Law/questions.js",
+    hasCalc: false
   }
 ];
