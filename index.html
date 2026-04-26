@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Electronics II — MCQ Practice</title>
-    <meta name="description" content="Interactive Electronics II MCQ practice app with BJT, FET, MOSFET questions. Instant feedback and revision mode.">
+    <title>MultiQuiz — MCQ Practice Platform</title>
+    <meta name="description" content="Interactive MCQ practice app for multiple subjects. Instant feedback and revision mode.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -21,13 +21,16 @@
     <!-- Top navigation bar -->
     <nav id="navbar">
         <div class="nav-left">
-            <div class="logo">
-                <span class="logo-icon">⚡</span>
-                <span class="logo-text">ElectroQuiz</span>
+            <div class="logo" id="nav-logo-home" style="cursor:pointer;">
+                <span class="logo-icon">🎓</span>
+                <span class="logo-text">MultiQuiz</span>
             </div>
         </div>
         <div class="nav-center">
-            <button class="nav-tab active" data-view="practice" id="nav-practice">
+            <button class="nav-tab active" data-view="home" id="nav-home">
+                <span class="tab-icon">🏠</span> Home
+            </button>
+            <button class="nav-tab" data-view="practice" id="nav-practice" style="display:none;">
                 <span class="tab-icon">📝</span> Practice
             </button>
             <button class="nav-tab" data-view="review" id="nav-review">
@@ -46,49 +49,32 @@
     <!-- Main content area -->
     <main id="app">
 
+        <!-- ==================== HOME VIEW (Subject Selection) ==================== -->
+        <section id="view-home" class="view active">
+            <div class="subject-selector">
+                <h1 class="section-title">Welcome Back!</h1>
+                <p class="section-subtitle">Select a subject to begin your practice session</p>
+                <div class="subject-grid" id="subject-grid">
+                    <!-- Subjects will be injected here -->
+                </div>
+            </div>
+        </section>
+
         <!-- ==================== PRACTICE VIEW ==================== -->
-        <section id="view-practice" class="view active">
+        <section id="view-practice" class="view">
             <!-- Topic selector -->
             <div class="topic-selector" id="topic-selector">
-                <h1 class="section-title">Choose a Topic</h1>
-                <p class="section-subtitle">Select a category to start practicing</p>
-                <div class="topic-grid">
-                    <button class="topic-card" data-topic="sheet1p1" id="topic-sheet1p1">
-                        <div class="topic-icon">🔌</div>
-                        <h3>BJT Fundamentals</h3>
-                        <p>Bipolar Junction Transistors — biasing, configurations, small-signal analysis</p>
-                        <div class="topic-meta">
-                            <span class="q-count">42 Questions</span>
-                            <span class="progress-pill" id="progress-sheet1p1">0%</span>
-                        </div>
+                <div class="view-header">
+                    <button class="back-btn" id="back-to-subjects">
+                        <span>←</span> Subjects
                     </button>
-                    <button class="topic-card" data-topic="sheet1p2" id="topic-sheet1p2">
-                        <div class="topic-icon">📡</div>
-                        <h3>CC & CB Amplifiers</h3>
-                        <p>Common Collector & Common Base — voltage gain, impedance, buffers</p>
-                        <div class="topic-meta">
-                            <span class="q-count">42 Questions</span>
-                            <span class="progress-pill" id="progress-sheet1p2">0%</span>
-                        </div>
-                    </button>
-                    <button class="topic-card" data-topic="sheet2p1" id="topic-sheet2p1">
-                        <div class="topic-icon">🧪</div>
-                        <h3>FET & MOSFET</h3>
-                        <p>Field-Effect Transistors — JFET, MOSFET, biasing, transconductance</p>
-                        <div class="topic-meta">
-                            <span class="q-count">44 Questions</span>
-                            <span class="progress-pill" id="progress-sheet2p1">0%</span>
-                        </div>
-                    </button>
-                    <button class="topic-card" data-topic="all" id="topic-all">
-                        <div class="topic-icon">🎯</div>
-                        <h3>All Questions</h3>
-                        <p>Mixed practice — all 128 MCQs shuffled randomly</p>
-                        <div class="topic-meta">
-                            <span class="q-count">128 Questions</span>
-                            <span class="progress-pill" id="progress-all">0%</span>
-                        </div>
-                    </button>
+                    <div class="subject-header-info">
+                        <h1 class="section-title" id="current-subject-name">Subject Name</h1>
+                        <p class="section-subtitle" id="current-subject-desc">Subject description goes here</p>
+                    </div>
+                </div>
+                <div class="topic-grid" id="topic-grid">
+                    <!-- Topics will be injected here -->
                 </div>
             </div>
 
@@ -186,7 +172,7 @@
         <section id="view-stats" class="view">
             <div class="stats-container">
                 <h1 class="section-title">Your Statistics</h1>
-                <p class="section-subtitle">Track your learning progress</p>
+                <p class="section-subtitle">Track your learning progress across all subjects</p>
 
                 <div class="stats-grid">
                     <div class="stat-card">
@@ -211,8 +197,8 @@
                     </div>
                 </div>
 
-                <h2 class="subsection-title">Topic Breakdown</h2>
-                <div class="topic-stats" id="topic-stats"></div>
+                <h2 class="subsection-title">Subject Breakdown</h2>
+                <div class="topic-stats" id="subject-stats"></div>
 
                 <div class="stats-actions">
                     <button class="btn btn-danger" id="btn-reset-stats">🗑️ Reset All Data</button>
@@ -221,7 +207,7 @@
         </section>
     </main>
 
-    <script src="questions.js"></script>
+    <script src="subjects.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
