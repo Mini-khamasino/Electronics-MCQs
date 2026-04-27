@@ -1,0 +1,6 @@
+Title: Example 3.2 — Inverting Op-Amp
+Description: Determine v1, i1, i2, vO, iL, iO, voltage gain, current gain, and power gain.
+
+Fields:
+Av (Vo/Vi) |  | -10 | 0.5
+Vo | V | -20 | 1

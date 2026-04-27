@@ -1,0 +1,5 @@
+Title: Example 3.6 — Summing Amplifier Output
+Description: Determine the output voltage for the shown summing amplifier circuit.
+
+Fields:
+Vo | V | -8.5 | 0.5

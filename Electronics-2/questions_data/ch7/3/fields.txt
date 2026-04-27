@@ -1,0 +1,5 @@
+Title: Example 3.9 — Integrator Circuit
+Description: Determine the rate of change of the output voltage. Pulse width = 100μs.
+
+Fields:
+dVo/dt | V/s | -50000 | 5000

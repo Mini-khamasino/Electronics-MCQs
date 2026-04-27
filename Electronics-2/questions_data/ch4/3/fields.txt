@@ -1,0 +1,6 @@
+Title: Example 2.5 — Common-Gate Configuration
+Description: Common-gate FET. Determine gm, rd, Zi, Zo, Av.
+
+Fields:
+gm | mS | 2 | 0.2
+Av |  | 7.27 | 0.4

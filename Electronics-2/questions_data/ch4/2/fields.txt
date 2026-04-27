@@ -1,0 +1,6 @@
+Title: Example 2.4 — Voltage-Divider FET
+Description: VGSQ=2.2V, IDQ=2.03mA. Determine gm, rd, Zi, Zo, Av.
+
+Fields:
+gm | mS | 1.52 | 0.1
+Av |  | -5.47 | 0.3

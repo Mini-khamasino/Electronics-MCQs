@@ -1,0 +1,10 @@
+Title: Example 1.2 — Fixed Bias DC Analysis
+Description: Determine IB, IC, IE, VBE, VCE, and VCB for the shown circuit. β = 150.
+
+Fields:
+IB | μA | 430 | 10
+IC | mA | 64.5 | 1
+IE | mA | 64.9 | 1
+VBE | V | 0.7 | 0.05
+VCE | V | 3.55 | 0.1
+VCB | V | 2.85 | 0.1

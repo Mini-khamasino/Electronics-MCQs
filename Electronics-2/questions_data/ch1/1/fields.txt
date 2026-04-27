@@ -1,0 +1,7 @@
+Title: Example 1.1 — DC Transistor Basics
+Description: For a DC transistor, determine β, α, and IE given IB = 50 μA and IC = 3.65 mA.
+
+Fields:
+β |  | 73 | 2
+α |  | 0.986 | 0.01
+IE | mA | 3.7 | 0.05

@@ -1,0 +1,7 @@
+Title: Example 1.3 — Emitter-Bias Circuit
+Description: Determine β, VCC and RB for the shown circuit. Given: VCE=7.3V, RE=0.68kΩ, IB=20μA, RC=2.7kΩ, VE=2.1V.
+
+Fields:
+β |  | 154 | 3
+VCC | V | 17.68 | 0.5
+RB | kΩ | 744 | 10

@@ -1,0 +1,6 @@
+Title: Example 1.4 — Collector-Feedback Bias
+Description: Determine IC, VB and VC for the shown circuit. β = 90, VCC = 3V, RC = 1.8kΩ, RB = 33kΩ.
+
+Fields:
+IB | μA | 11.8 | 1
+IC | mA | 1.06 | 0.05

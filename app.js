@@ -878,34 +878,41 @@
     const fieldsContainer = $("#calc-fields");
     fieldsContainer.innerHTML = "";
     const answered = calcAnswered[q.id];
+    const hasFields = q.fields && q.fields.length > 0;
 
-    q.fields.forEach((field, i) => {
-      const group = document.createElement("div");
-      group.className = "calc-field-group";
-      if (answered) {
-        group.classList.add(answered.results[i] ? "correct" : "wrong");
-      }
+    if (hasFields) {
+      q.fields.forEach((field, i) => {
+        const group = document.createElement("div");
+        group.className = "calc-field-group";
+        if (answered) {
+          group.classList.add(answered.results[i] ? "correct" : "wrong");
+        }
 
-      const unitText = field.unit ? ` (${field.unit})` : '';
-      group.innerHTML = `
-        <div class="calc-field-label">
-          ${field.label}
-          <span class="calc-field-unit">${unitText}</span>
-        </div>
-        <input type="text" inputmode="decimal" class="calc-field-input" 
-               id="calc-input-${i}" placeholder="Enter value..." 
-               ${answered ? 'disabled' : ''}
-               value="${answered ? (answered.inputs[i] || '') : ''}" />
-        ${answered ? `<div class="calc-field-result ${answered.results[i] ? 'correct' : 'wrong'}">
-          ${answered.results[i] ? '✓ Correct' : `✗ Expected: ${field.answer} ${field.unit}`}
-        </div>` : ''}
-      `;
-      fieldsContainer.appendChild(group);
-    });
+        const unitText = field.unit ? ` (${field.unit})` : '';
+        group.innerHTML = `
+          <div class="calc-field-label">
+            ${field.label}
+            <span class="calc-field-unit">${unitText}</span>
+          </div>
+          <input type="text" inputmode="decimal" class="calc-field-input" 
+                 id="calc-input-${i}" placeholder="Enter value..." 
+                 ${answered ? 'disabled' : ''}
+                 value="${answered ? (answered.inputs[i] || '') : ''}" />
+          ${answered ? `<div class="calc-field-result ${answered.results[i] ? 'correct' : 'wrong'}">
+            ${answered.results[i] ? '✓ Correct' : `✗ Expected: ${field.answer} ${field.unit}`}
+          </div>` : ''}
+        `;
+        fieldsContainer.appendChild(group);
+      });
 
-    // Actions
-    $("#calc-submit").style.display = answered ? "none" : "inline-flex";
-    $("#calc-show-solution").style.display = answered ? "inline-flex" : "none";
+      // Actions
+      $("#calc-submit").style.display = answered ? "none" : "inline-flex";
+      $("#calc-show-solution").style.display = answered ? "inline-flex" : "none";
+    } else {
+      // Written question / Flashcard mode (no fields to fill)
+      $("#calc-submit").style.display = "none";
+      $("#calc-show-solution").style.display = "inline-flex";
+    }
 
     // Solution container
     const solContainer = $("#calc-solution-container");
@@ -914,7 +921,7 @@
 
     // Feedback
     const feedback = $("#calc-feedback");
-    if (answered) {
+    if (answered && hasFields) {
       const correctCount = answered.results.filter(r => r).length;
       const total = answered.results.length;
       const allCorrect = correctCount === total;
@@ -977,13 +984,27 @@
     if (solContainer.style.display === "none") {
       solContainer.style.display = "block";
       solImgs.innerHTML = "";
-      q.solutionImgs.forEach(src => {
-        const img = document.createElement("img");
-        img.src = src;
-        img.alt = "Solution step";
-        img.loading = "lazy";
-        solImgs.appendChild(img);
-      });
+      
+      if (q.solutionImgs && q.solutionImgs.length > 0) {
+        q.solutionImgs.forEach(src => {
+          const img = document.createElement("img");
+          img.src = src;
+          img.alt = "Solution step";
+          img.loading = "lazy";
+          solImgs.appendChild(img);
+        });
+      } else if (q.solutionText) {
+        const textDiv = document.createElement("div");
+        textDiv.className = "calc-solution-text";
+        textDiv.style.padding = "10px";
+        textDiv.style.fontSize = "1.1rem";
+        textDiv.style.lineHeight = "1.6";
+        textDiv.innerHTML = q.solutionText;
+        solImgs.appendChild(textDiv);
+      } else {
+        solImgs.innerHTML = "<p>No solution provided.</p>";
+      }
+      
       $("#calc-show-solution").textContent = "🔼 Hide Solution";
 
       solContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1034,6 +1055,12 @@
   // ── Init ─────────────────────────────────────────────────
   initTheme();
 
+  // --- LOGIN TEMPORARILY DISABLED ---
+  // Bypassing auth so you can use the app directly
+  currentUser = { uid: "guest_user", name: "Guest User", email: "" };
+  onAuthSuccess();
+
+  /* ORIGINAL AUTH LOGIC (commented out for now)
   // Check if user is already logged in (localStorage fallback for non-Firebase)
   if (!firebaseAuth) {
     // No Firebase — try localStorage
@@ -1053,4 +1080,5 @@
     // Show auth screen initially; it will be hidden if user is already signed in
     showAuthScreen();
   }
+  */
 })();

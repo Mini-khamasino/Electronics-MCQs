@@ -1,0 +1,6 @@
+Title: Example 3.1 — Non-Inverting Op-Amp
+Description: Determine Zin, Zout, and Acl. Given: Zin=2MΩ, Zout=75Ω, Aol=200,000.
+
+Fields:
+Acl |  | 11 | 0.5
+Zin(CL) | MΩ | 36.4 | 2

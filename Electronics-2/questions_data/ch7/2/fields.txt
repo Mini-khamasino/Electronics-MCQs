@@ -1,0 +1,5 @@
+Title: Example 3.8 — Scaling Adder
+Description: Determine the weight of each input voltage and find the output voltage.
+
+Fields:
+Vo | V | -6.2 | 0.5
