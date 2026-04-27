@@ -1,13 +1,15 @@
 // ============================================================
-// Firebase Configuration for MultiQuiz
+// Firebase Configuration for MultiQuiz — Google Sign-In
 // ============================================================
 // HOW TO SET UP:
 // 1. Go to https://console.firebase.google.com/
-// 2. Create a new project called "MultiQuiz"
-// 3. Go to Project Settings > General > Your apps > Add web app
-// 4. Copy the config object and replace the placeholder below
-// 5. Go to Firestore Database > Create database > Start in test mode
-// 6. Done! Your app now syncs across devices.
+// 2. Create a new project (or use existing)
+// 3. Go to Authentication > Sign-in method > Enable "Google"
+// 4. Add your GitHub Pages domain to Authorized domains:
+//    Settings > Authorized domains > Add "mini-khamasino.github.io"
+// 5. Go to Project Settings > General > Your apps > Add web app
+// 6. Copy the config object and replace the placeholder below
+// 7. Done! Users can now sign in with their Google account.
 // ============================================================
 
 const FIREBASE_CONFIG = {

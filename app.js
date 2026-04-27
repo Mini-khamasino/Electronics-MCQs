@@ -5,15 +5,8 @@
 (function () {
   "use strict";
 
-  // ── Firebase Init ────────────────────────────────────────
-  let db = null;
-  let currentUser = null; // { uid, name, id }
-  try {
-    if (typeof FIREBASE_CONFIG !== 'undefined' && FIREBASE_CONFIG.apiKey !== 'YOUR_API_KEY') {
-      firebase.initializeApp(FIREBASE_CONFIG);
-      db = firebase.firestore();
-    }
-  } catch (e) { console.warn('Firebase init skipped:', e); }
+  // ── User State ────────────────────────────────────────────
+  let currentUser = null; // { username, name }
 
   // ── Storage Keys ─────────────────────────────────────────
   const STORAGE_KEYS = {
@@ -21,8 +14,7 @@
     stats: "multiquiz_stats",
     theme: "multiquiz_theme",
     lastSubject: "multiquiz_last_subject",
-    currentUser: "multiquiz_current_user",
-    users: "multiquiz_users"
+    currentUser: "multiquiz_current_user"
   };
 
   // ── State ────────────────────────────────────────────────
@@ -88,94 +80,25 @@
 
   function saveJSON(key, data) {
     localStorage.setItem(userKey(key), JSON.stringify(data));
-    syncToCloud(key, data);
   }
 
-  // ── Cloud Sync (Firestore) ──────────────────────────────
-  let syncDebounce = {};
-  function syncToCloud(key, data) {
-    if (!db || !currentUser) return;
-    clearTimeout(syncDebounce[key]);
-    syncDebounce[key] = setTimeout(() => {
-      db.collection('users').doc(currentUser.uid).set(
-        { [key]: JSON.stringify(data), updatedAt: firebase.firestore.FieldValue.serverTimestamp() },
-        { merge: true }
-      ).catch(e => console.warn('Sync error:', e));
-    }, 500);
-  }
-
-  async function pullFromCloud() {
-    if (!db || !currentUser) return;
-    try {
-      const doc = await db.collection('users').doc(currentUser.uid).get();
-      if (doc.exists) {
-        const d = doc.data();
-        // Merge cloud data — cloud wins if it exists
-        ['mistakes', 'stats'].forEach(key => {
-          if (d[key]) {
-            localStorage.setItem(userKey(key), d[key]);
-          }
-        });
-      }
-    } catch (e) { console.warn('Pull error:', e); }
-  }
-
-  // ── Auth System ─────────────────────────────────────────
-  function generateUID(id) {
-    // Simple hash of the ID string for doc key
-    let hash = 0;
-    for (let i = 0; i < id.length; i++) {
-      hash = ((hash << 5) - hash) + id.charCodeAt(i);
-      hash |= 0;
+  // ── Firebase Auth (Google Sign-In) ─────────────────────
+  let firebaseAuth = null;
+  let googleProvider = null;
+  try {
+    if (typeof FIREBASE_CONFIG !== 'undefined' && FIREBASE_CONFIG.apiKey !== 'YOUR_API_KEY') {
+      firebase.initializeApp(FIREBASE_CONFIG);
+      firebaseAuth = firebase.auth();
+      googleProvider = new firebase.auth.GoogleAuthProvider();
     }
-    return 'u' + Math.abs(hash).toString(36);
-  }
-
-  function getUsers() {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.users)) || {}; }
-    catch { return {}; }
-  }
-
-  function saveUsers(users) {
-    localStorage.setItem(STORAGE_KEYS.users, JSON.stringify(users));
-  }
-
-  async function loginUser(userId) {
-    const users = getUsers();
-    const uid = generateUID(userId);
-    if (!users[uid]) return { error: 'No account found. Sign up first!' };
-    currentUser = users[uid];
-    localStorage.setItem(STORAGE_KEYS.currentUser, JSON.stringify(currentUser));
-    await pullFromCloud();
-    onAuthSuccess();
-    return { ok: true };
-  }
-
-  async function signupUser(name, userId) {
-    const uid = generateUID(userId);
-    const users = getUsers();
-    if (users[uid]) return { error: 'This ID is already registered. Try signing in.' };
-    const user = { uid, name: name.trim(), id: userId.trim(), createdAt: Date.now() };
-    users[uid] = user;
-    saveUsers(users);
-    currentUser = user;
-    localStorage.setItem(STORAGE_KEYS.currentUser, JSON.stringify(currentUser));
-    // Save profile to cloud too
-    if (db) {
-      try {
-        await db.collection('users').doc(uid).set(
-          { profile: JSON.stringify(user), createdAt: firebase.firestore.FieldValue.serverTimestamp() },
-          { merge: true }
-        );
-      } catch (e) { console.warn('Profile sync error:', e); }
-    }
-    onAuthSuccess();
-    return { ok: true };
-  }
+  } catch (e) { console.warn('Firebase init skipped:', e); }
 
   function logoutUser() {
     currentUser = null;
     localStorage.removeItem(STORAGE_KEYS.currentUser);
+    if (firebaseAuth) {
+      firebaseAuth.signOut().catch(e => console.warn('Sign out error:', e));
+    }
     showAuthScreen();
   }
 
@@ -184,6 +107,7 @@
     $("#navbar").style.display = 'none';
     $("#app").style.display = 'none';
     $("#user-badge").style.display = 'none';
+    $("#auth-error").textContent = '';
   }
 
   function onAuthSuccess() {
@@ -195,44 +119,65 @@
     $("#user-avatar").textContent = (currentUser.name || '?')[0].toUpperCase();
     $("#user-name").textContent = currentUser.name;
     $("#user-dropdown-header").textContent = currentUser.name;
-    $("#user-dropdown-id").textContent = `ID: ${currentUser.id}`;
+    $("#user-dropdown-id").textContent = currentUser.email || '';
     // Refresh data
     renderSubjects();
     updateMistakesBadge();
   }
 
-  // Auth UI events
-  $("#auth-tab-login").addEventListener('click', () => {
-    $("#auth-tab-login").classList.add('active');
-    $("#auth-tab-signup").classList.remove('active');
-    $("#login-form").style.display = '';
-    $("#signup-form").style.display = 'none';
-  });
-  $("#auth-tab-signup").addEventListener('click', () => {
-    $("#auth-tab-signup").classList.add('active');
-    $("#auth-tab-login").classList.remove('active');
-    $("#signup-form").style.display = '';
-    $("#login-form").style.display = 'none';
+  // Google Sign-In button
+  $("#btn-google-signin").addEventListener('click', async () => {
+    if (!firebaseAuth || !googleProvider) {
+      $("#auth-error").textContent = 'Firebase not configured. Please set up firebase-config.js first.';
+      return;
+    }
+
+    try {
+      $("#btn-google-signin").disabled = true;
+      $("#btn-google-signin").querySelector('span').textContent = 'Signing in...';
+      $("#auth-error").textContent = '';
+
+      const result = await firebaseAuth.signInWithPopup(googleProvider);
+      const user = result.user;
+      
+      currentUser = {
+        uid: user.uid,
+        name: user.displayName || 'User',
+        email: user.email || '',
+        photo: user.photoURL || ''
+      };
+      localStorage.setItem(STORAGE_KEYS.currentUser, JSON.stringify(currentUser));
+      onAuthSuccess();
+    } catch (e) {
+      console.error('Google sign-in error:', e);
+      if (e.code === 'auth/popup-closed-by-user') {
+        $("#auth-error").textContent = '';
+      } else if (e.code === 'auth/unauthorized-domain') {
+        $("#auth-error").textContent = 'This domain is not authorized. Add it in Firebase Console → Authentication → Settings → Authorized domains.';
+      } else {
+        $("#auth-error").textContent = e.message || 'Sign-in failed. Try again.';
+      }
+    } finally {
+      $("#btn-google-signin").disabled = false;
+      $("#btn-google-signin").querySelector('span').textContent = 'Sign in with Google';
+    }
   });
 
-  $("#login-form").addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const id = $("#login-id").value.trim();
-    if (!id) return;
-    $("#login-error").textContent = '';
-    const res = await loginUser(id);
-    if (res.error) $("#login-error").textContent = res.error;
-  });
-
-  $("#signup-form").addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const name = $("#signup-name").value.trim();
-    const id = $("#signup-id").value.trim();
-    if (!name || !id) return;
-    $("#signup-error").textContent = '';
-    const res = await signupUser(name, id);
-    if (res.error) $("#signup-error").textContent = res.error;
-  });
+  // Listen for Firebase auth state changes (auto-login on page refresh)
+  if (firebaseAuth) {
+    firebaseAuth.onAuthStateChanged((user) => {
+      if (user && !currentUser) {
+        currentUser = {
+          uid: user.uid,
+          name: user.displayName || 'User',
+          email: user.email || '',
+          photo: user.photoURL || ''
+        };
+        localStorage.setItem(STORAGE_KEYS.currentUser, JSON.stringify(currentUser));
+        onAuthSuccess();
+      }
+    });
+  }
 
   // User badge dropdown
   $("#user-badge").addEventListener('click', () => {
@@ -1089,16 +1034,23 @@
   // ── Init ─────────────────────────────────────────────────
   initTheme();
 
-  // Check if user is already logged in
-  const savedUser = localStorage.getItem(STORAGE_KEYS.currentUser);
-  if (savedUser) {
-    try {
-      currentUser = JSON.parse(savedUser);
-      onAuthSuccess();
-    } catch {
+  // Check if user is already logged in (localStorage fallback for non-Firebase)
+  if (!firebaseAuth) {
+    // No Firebase — try localStorage
+    const savedUser = localStorage.getItem(STORAGE_KEYS.currentUser);
+    if (savedUser) {
+      try {
+        currentUser = JSON.parse(savedUser);
+        onAuthSuccess();
+      } catch {
+        showAuthScreen();
+      }
+    } else {
       showAuthScreen();
     }
   } else {
+    // Firebase is active — onAuthStateChanged will handle auto-login
+    // Show auth screen initially; it will be hidden if user is already signed in
     showAuthScreen();
   }
 })();
