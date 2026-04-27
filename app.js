@@ -5,16 +5,14 @@
 (function () {
   "use strict";
 
-  // ── User State ────────────────────────────────────────────
-  let currentUser = null; // { username, name }
+
 
   // ── Storage Keys ─────────────────────────────────────────
   const STORAGE_KEYS = {
     mistakes: "multiquiz_mistakes",
     stats: "multiquiz_stats",
     theme: "multiquiz_theme",
-    lastSubject: "multiquiz_last_subject",
-    currentUser: "multiquiz_current_user"
+    lastSubject: "multiquiz_last_subject"
   };
 
   // ── State ────────────────────────────────────────────────
@@ -68,135 +66,16 @@
     return a;
   }
 
-  function userKey(key) {
-    const uid = currentUser?.uid || 'guest';
-    return `${uid}_${key}`;
-  }
-
   function loadJSON(key) {
-    try { return JSON.parse(localStorage.getItem(userKey(key))) || null; }
+    try { return JSON.parse(localStorage.getItem(key)) || null; }
     catch { return null; }
   }
 
   function saveJSON(key, data) {
-    localStorage.setItem(userKey(key), JSON.stringify(data));
+    localStorage.setItem(key, JSON.stringify(data));
   }
 
-  // ── Firebase Auth (Google Sign-In) ─────────────────────
-  let firebaseAuth = null;
-  let googleProvider = null;
-  try {
-    if (typeof FIREBASE_CONFIG !== 'undefined' && FIREBASE_CONFIG.apiKey !== 'YOUR_API_KEY') {
-      firebase.initializeApp(FIREBASE_CONFIG);
-      firebaseAuth = firebase.auth();
-      googleProvider = new firebase.auth.GoogleAuthProvider();
-    }
-  } catch (e) { console.warn('Firebase init skipped:', e); }
 
-  function logoutUser() {
-    currentUser = null;
-    localStorage.removeItem(STORAGE_KEYS.currentUser);
-    if (firebaseAuth) {
-      firebaseAuth.signOut().catch(e => console.warn('Sign out error:', e));
-    }
-    showAuthScreen();
-  }
-
-  function showAuthScreen() {
-    $("#auth-screen").classList.remove('hidden');
-    $("#navbar").style.display = 'none';
-    $("#app").style.display = 'none';
-    $("#user-badge").style.display = 'none';
-    $("#auth-error").textContent = '';
-  }
-
-  function onAuthSuccess() {
-    $("#auth-screen").classList.add('hidden');
-    $("#navbar").style.display = '';
-    $("#app").style.display = '';
-    // Update user badge
-    $("#user-badge").style.display = 'flex';
-    $("#user-avatar").textContent = (currentUser.name || '?')[0].toUpperCase();
-    $("#user-name").textContent = currentUser.name;
-    $("#user-dropdown-header").textContent = currentUser.name;
-    $("#user-dropdown-id").textContent = currentUser.email || '';
-    // Refresh data
-    renderSubjects();
-    updateMistakesBadge();
-  }
-
-  // Google Sign-In button
-  $("#btn-google-signin").addEventListener('click', async () => {
-    if (!firebaseAuth || !googleProvider) {
-      $("#auth-error").textContent = 'Firebase not configured. Please set up firebase-config.js first.';
-      return;
-    }
-
-    try {
-      $("#btn-google-signin").disabled = true;
-      $("#btn-google-signin").querySelector('span').textContent = 'Signing in...';
-      $("#auth-error").textContent = '';
-
-      const result = await firebaseAuth.signInWithPopup(googleProvider);
-      const user = result.user;
-      
-      currentUser = {
-        uid: user.uid,
-        name: user.displayName || 'User',
-        email: user.email || '',
-        photo: user.photoURL || ''
-      };
-      localStorage.setItem(STORAGE_KEYS.currentUser, JSON.stringify(currentUser));
-      onAuthSuccess();
-    } catch (e) {
-      console.error('Google sign-in error:', e);
-      if (e.code === 'auth/popup-closed-by-user') {
-        $("#auth-error").textContent = '';
-      } else if (e.code === 'auth/unauthorized-domain') {
-        $("#auth-error").textContent = 'This domain is not authorized. Add it in Firebase Console → Authentication → Settings → Authorized domains.';
-      } else {
-        $("#auth-error").textContent = e.message || 'Sign-in failed. Try again.';
-      }
-    } finally {
-      $("#btn-google-signin").disabled = false;
-      $("#btn-google-signin").querySelector('span').textContent = 'Sign in with Google';
-    }
-  });
-
-  // Listen for Firebase auth state changes (auto-login on page refresh)
-  if (firebaseAuth) {
-    firebaseAuth.onAuthStateChanged((user) => {
-      if (user && !currentUser) {
-        currentUser = {
-          uid: user.uid,
-          name: user.displayName || 'User',
-          email: user.email || '',
-          photo: user.photoURL || ''
-        };
-        localStorage.setItem(STORAGE_KEYS.currentUser, JSON.stringify(currentUser));
-        onAuthSuccess();
-      }
-    });
-  }
-
-  // User badge dropdown
-  $("#user-badge").addEventListener('click', () => {
-    const dd = $("#user-dropdown");
-    dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
-  });
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('#user-badge') && !e.target.closest('#user-dropdown')) {
-      $("#user-dropdown").style.display = 'none';
-    }
-  });
-  $("#btn-switch-user").addEventListener('click', () => {
-    $("#user-dropdown").style.display = 'none';
-    logoutUser();
-  });
-  $("#btn-logout").addEventListener('click', () => {
-    $("#user-dropdown").style.display = 'none';
-    logoutUser();
-  });
 
   // ── Theme ────────────────────────────────────────────────
   function initTheme() {
@@ -1054,31 +933,6 @@
 
   // ── Init ─────────────────────────────────────────────────
   initTheme();
-
-  // --- LOGIN TEMPORARILY DISABLED ---
-  // Bypassing auth so you can use the app directly
-  currentUser = { uid: "guest_user", name: "Guest User", email: "" };
-  onAuthSuccess();
-
-  /* ORIGINAL AUTH LOGIC (commented out for now)
-  // Check if user is already logged in (localStorage fallback for non-Firebase)
-  if (!firebaseAuth) {
-    // No Firebase — try localStorage
-    const savedUser = localStorage.getItem(STORAGE_KEYS.currentUser);
-    if (savedUser) {
-      try {
-        currentUser = JSON.parse(savedUser);
-        onAuthSuccess();
-      } catch {
-        showAuthScreen();
-      }
-    } else {
-      showAuthScreen();
-    }
-  } else {
-    // Firebase is active — onAuthStateChanged will handle auto-login
-    // Show auth screen initially; it will be hidden if user is already signed in
-    showAuthScreen();
-  }
-  */
+  renderSubjects();
+  updateMistakesBadge();
 })();
