@@ -1819,3 +1819,273 @@ body {
   background: var(--accent-primary);
   color: white;
 }
+
+/* ================================================================
+   RESPONSIVE — Tablet (≤ 768px)
+   ================================================================ */
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 56px;
+  }
+
+  #navbar {
+    padding: 0 12px;
+    gap: 6px;
+  }
+
+  .logo-text { display: none; }
+  .logo-icon { font-size: 1.3rem; }
+
+  .nav-center {
+    gap: 2px;
+  }
+
+  .nav-tab {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    gap: 4px;
+  }
+
+  .nav-tab .tab-icon { font-size: 0.85rem; }
+
+  .badge {
+    width: 16px;
+    height: 16px;
+    font-size: 0.6rem;
+  }
+
+  .user-name { display: none; }
+  .user-menu-btn { display: none; }
+  .user-badge {
+    padding: 3px;
+    gap: 0;
+  }
+  .user-avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+  }
+
+  main {
+    padding: 16px 16px 24px;
+  }
+
+  .section-title { font-size: 1.4rem; }
+  .section-subtitle { font-size: 0.85rem; }
+
+  .subject-grid,
+  .topic-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .topic-card {
+    padding: 20px;
+  }
+
+  .view-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .mode-toggle {
+    width: 100%;
+  }
+  .mode-btn {
+    flex: 1;
+    padding: 10px 12px;
+    font-size: 0.85rem;
+    text-align: center;
+  }
+
+  .quiz-header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .quiz-progress-bar { order: 3; width: 100%; }
+  .quiz-counter { font-size: 0.8rem; }
+
+  .question-card,
+  .calc-question-card {
+    padding: 20px;
+  }
+
+  .question-text { font-size: 1rem; }
+
+  .option-btn {
+    padding: 12px 14px;
+    font-size: 0.9rem;
+  }
+
+  .quiz-nav {
+    gap: 8px;
+  }
+  .quiz-nav .btn {
+    padding: 10px 16px;
+    font-size: 0.85rem;
+  }
+
+  .results-card { padding: 28px 20px; }
+  .results-actions {
+    flex-direction: column;
+  }
+  .results-actions .btn { width: 100%; }
+
+  .calc-fields {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .calc-actions {
+    flex-direction: column;
+  }
+  .calc-actions .btn { width: 100%; }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .stat-card { padding: 16px; }
+  .stat-card-value { font-size: 1.6rem; }
+
+  .review-item { padding: 16px; }
+
+  .auth-card {
+    margin: 16px;
+    padding: 32px 24px;
+  }
+  .auth-title { font-size: 1.4rem; }
+
+  .user-dropdown {
+    right: -40px;
+  }
+}
+
+/* ================================================================
+   RESPONSIVE — Phone (≤ 480px)
+   ================================================================ */
+@media (max-width: 480px) {
+  :root {
+    --nav-height: 50px;
+  }
+
+  #navbar {
+    padding: 0 8px;
+  }
+
+  .nav-center {
+    gap: 1px;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .nav-tab {
+    padding: 5px 7px;
+    font-size: 0;   /* hide text on very small screens */
+    min-width: 36px;
+    justify-content: center;
+  }
+  .nav-tab .tab-icon {
+    font-size: 1.1rem;
+    margin: 0;
+  }
+  /* keep active tab text visible */
+  .nav-tab.active {
+    font-size: 0.7rem;
+    gap: 4px;
+  }
+
+  .icon-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+
+  main {
+    padding: 12px 12px 20px;
+  }
+
+  .section-title { font-size: 1.2rem; }
+
+  .topic-card {
+    padding: 16px;
+  }
+  .topic-icon { font-size: 1.5rem; }
+  .topic-card h3 { font-size: 1rem; }
+
+  .question-card,
+  .calc-question-card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .question-number {
+    font-size: 0.65rem;
+    padding: 3px 10px;
+  }
+  .question-text { font-size: 0.95rem; }
+
+  .option-btn {
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+  }
+  .option-letter {
+    width: 26px;
+    height: 26px;
+    font-size: 0.7rem;
+  }
+
+  .feedback-bar {
+    padding: 12px;
+    font-size: 0.85rem;
+  }
+
+  .calc-fields {
+    grid-template-columns: 1fr;
+  }
+  .calc-field-input { font-size: 1.1rem; }
+
+  .calc-image-container {
+    margin: 12px -16px;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .stat-card {
+    padding: 12px;
+  }
+  .stat-card-icon { font-size: 1.2rem; }
+  .stat-card-value { font-size: 1.3rem; }
+  .stat-card-label { font-size: 0.65rem; }
+
+  .auth-card {
+    margin: 12px;
+    padding: 28px 18px;
+  }
+  .auth-logo { font-size: 2.5rem; }
+  .auth-title { font-size: 1.3rem; }
+  .auth-subtitle { font-size: 0.85rem; margin-bottom: 20px; }
+  .auth-tab { padding: 8px 12px; font-size: 0.8rem; }
+  .auth-field input { padding: 12px 14px; font-size: 0.9rem; }
+
+  .user-dropdown {
+    position: fixed;
+    right: 8px;
+    top: var(--nav-height);
+    margin-top: 4px;
+    width: calc(100vw - 16px);
+    max-width: 280px;
+  }
+
+  .score-circle svg { width: 100px; height: 100px; }
+  .results-emoji { font-size: 2.5rem; }
+  .results-title { font-size: 1.2rem; }
+}
