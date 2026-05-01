@@ -1,0 +1,22 @@
+Title: [Question Title — e.g. Example 1.1 — DC Analysis]
+Description: [What to find — e.g. Determine IB, IC, VCE for the shown circuit. β=100.]
+
+Fields:
+[Label] | [Unit] | [Answer] | [Tolerance]
+[Label] | [Unit] | [Answer] | [Tolerance]
+
+Example:
+Title: Example 1.1 — DC Transistor Basics
+Description: For a DC transistor, determine β, α, and IE given IB = 50 μA and IC = 3.65 mA.
+
+Fields:
+β |  | 73 | 2
+α |  | 0.986 | 0.01
+IE | mA | 3.7 | 0.05
+
+NOTES:
+- Also add question.png and answer.png (or answer1.png, answer2.png) in the same folder
+- Label: the variable name the student must find
+- Unit: leave empty (just spaces) if unitless
+- Answer: the correct numerical value
+- Tolerance: acceptable margin of error (e.g. 0.05 means ±0.05)

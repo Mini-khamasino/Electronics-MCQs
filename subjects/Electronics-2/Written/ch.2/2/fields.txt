@@ -1,0 +1,7 @@
+Title: Example 1.6 — Voltage-Divider Bias Amplifier
+Description: Determine Zi, Zo, Av, Ai for the voltage-divider bias configuration.
+
+Fields:
+Zi | kΩ | 1.18 | 0.1
+Zo | kΩ | 4.7 | 0.2
+Av |  | -374 | 10

@@ -1,0 +1,351 @@
+Q: A FET is a:
+A) Current controlled device
+B) Voltage controlled device
+C) Power controlled device
+D) Temperature controlled device
+Answer: B
+Explanation: FET is a voltage controlled device — drain current is controlled by gate-source voltage VGS.
+
+Q: A BJT is controlled by:
+A) VGS
+B) ID
+C) IB
+D) VDS
+Answer: C
+Explanation: BJT is a current controlled device — collector current is controlled by base current IB.
+
+Q: FET terminals are:
+A) Base, Collector, Emitter
+B) Gate, Source, Drain
+C) Gate, Collector, Source
+D) Base, Drain, Source
+Answer: B
+Explanation: The three terminals of a FET are Gate, Source, and Drain.
+
+Q: In BJT, collector current depends mainly on:
+A) VGS
+B) IB
+C) VP
+D) IDSS
+Answer: B
+Explanation: In a BJT, IC = β·IB, so the collector current depends mainly on base current IB.
+
+Q: In FET, drain current depends on:
+A) IB
+B) VBE
+C) VGS
+D) VCE
+Answer: C
+Explanation: In a FET, drain current ID depends on the gate-source voltage VGS.
+
+Q: Majority carriers in n-channel FET are:
+A) Holes
+B) Electrons
+C) Ions
+D) Protons
+Answer: B
+Explanation: In n-channel FET, current flows through electrons (majority carriers in n-type).
+
+Q: Mobility in n-channel device compared to p-channel is:
+A) Lower
+B) Equal
+C) Higher
+D) Zero
+Answer: C
+Explanation: Electrons have higher mobility than holes, making n-channel devices faster.
+
+Q: FET input impedance is generally:
+A) Low
+B) Medium
+C) Very high
+D) Zero
+Answer: C
+Explanation: FET has a very high input impedance because the gate is insulated (or reverse-biased).
+
+Q: In n-channel enhancement MOSFET, substrate is:
+A) n-type
+B) p-type
+C) Intrinsic
+D) Metal
+Answer: B
+Explanation: In n-channel E-MOSFET, the substrate is p-type, and the channel is induced by positive VGS.
+
+Q: In p-channel enhancement MOSFET, source and drain are:
+A) n-type
+B) p-type
+C) Intrinsic
+D) Metal
+Answer: B
+Explanation: In p-channel E-MOSFET, source and drain regions are p-type.
+
+Q: Enhancement MOSFET requires:
+A) No gate voltage
+B) Negative VGS only
+C) Positive or negative VGS to create channel
+D) Zero VDS
+Answer: C
+Explanation: Enhancement MOSFET needs a gate voltage (positive for n-channel, negative for p-channel) to create the conducting channel.
+
+Q: n-channel MOSFET turns ON when:
+A) VGS negative
+B) VGS positive
+C) VDS = 0
+D) ID = 0
+Answer: B
+Explanation: n-channel MOSFET requires positive VGS > VT (threshold) to turn ON.
+
+Q: Majority carriers in p-channel MOSFET are:
+A) Electrons
+B) Holes
+C) Neutrons
+D) Ions
+Answer: B
+Explanation: In p-channel MOSFET, current flows through holes (majority carriers in p-type).
+
+Q: Current direction in n-channel MOSFET is:
+A) Source → Drain
+B) Drain → Source
+C) Gate → Drain
+D) Gate → Source
+Answer: B
+Explanation: Conventional current flows from Drain to Source in n-channel MOSFET.
+
+Q: Speed of n-channel device compared to p-channel is:
+A) Slower
+B) Same
+C) Faster
+D) Zero
+Answer: C
+Explanation: n-channel is faster because electrons have higher mobility than holes.
+
+Q: In depletion MOSFET, applying opposite gate voltage:
+A) Enhances channel
+B) Depletes channel
+C) Removes substrate
+D) Increases breakdown
+Answer: B
+Explanation: Applying opposite polarity gate voltage depletes the existing channel of carriers.
+
+Q: Enhancement MOSFET source and drain are:
+A) Physically connected
+B) Physically separated
+C) Shorted
+D) Floating
+Answer: B
+Explanation: Source and drain are physically separated; the channel must be induced by gate voltage.
+
+Q: n-channel JFET gate is made of:
+A) n-type
+B) p-type
+C) Metal
+D) Intrinsic
+Answer: B
+Explanation: In n-channel JFET, the gate is p-type to form a reverse-biased pn junction.
+
+Q: At VGS = 0, JFET is normally:
+A) OFF
+B) ON
+C) Saturated
+D) Breakdown
+Answer: B
+Explanation: JFET is a normally-ON (depletion-mode) device — channel conducts at VGS = 0.
+
+Q: Pinch-off occurs when:
+A) Channel widens
+B) ID maximum
+C) Channel is blocked
+D) VGS = 0
+Answer: C
+Explanation: Pinch-off occurs when the depletion regions meet and the channel is blocked.
+
+Q: At pinch-off:
+A) ID = IDSS
+B) ID = 0
+C) VDS = 0
+D) gm = 0
+Answer: B
+Explanation: At the pinch-off voltage (VGS = VP), the channel is fully depleted and ID = 0.
+
+Q: Ohmic region behaves like:
+A) Amplifier
+B) Switch
+C) Resistor
+D) Oscillator
+Answer: C
+Explanation: In the ohmic (linear) region, the FET behaves like a voltage-controlled resistor.
+
+Q: Saturation region used for:
+A) Switching
+B) Amplification
+C) Breakdown
+D) Rectification
+Answer: B
+Explanation: The saturation (active) region is used for amplification in FET circuits.
+
+Q: In cutoff region:
+A) ID ≈ 0
+B) ID maximum
+C) gm maximum
+D) RD shorted
+Answer: A
+Explanation: In cutoff, VGS ≤ VP and the drain current is approximately zero.
+
+Q: In breakdown region:
+A) Safe operation
+B) Not used
+C) Amplification
+D) Biasing
+Answer: B
+Explanation: The breakdown region can damage the device and is not used in normal operation.
+
+Q: For n-channel JFET, control voltage is:
+A) Positive VGS
+B) Negative VGS
+C) Zero always
+D) High VDS
+Answer: B
+Explanation: n-channel JFET is controlled by negative VGS (reverse-biasing the gate junction).
+
+Q: Drain voltage polarity for n-channel JFET:
+A) VD < VS
+B) VD > VS
+C) Equal
+D) Zero
+Answer: B
+Explanation: For n-channel JFET, the drain is positive with respect to the source (VD > VS).
+
+Q: Q-point means:
+A) Cutoff point
+B) Breakdown point
+C) Operating bias point
+D) Zero voltage point
+Answer: C
+Explanation: Q-point (quiescent point) is the DC operating bias point of the transistor.
+
+Q: IDSS is:
+A) Zero current
+B) Max drain current at VGS = 0
+C) Breakdown current
+D) Gate current
+Answer: B
+Explanation: IDSS is the maximum drain current when VGS = 0 (drain-source saturation current).
+
+Q: Transconductance gm is defined as:
+A) ID / VDS
+B) ΔID / ΔVGS
+C) VGS / ID
+D) VDS / ID
+Answer: B
+Explanation: gm = ΔID/ΔVGS — it measures how effectively VGS controls drain current.
+
+Q: Unit of gm:
+A) Ohm
+B) Volt
+C) Siemens
+D) Ampere
+Answer: C
+Explanation: Transconductance gm is measured in Siemens (S) or mS.
+
+Q: gm0 =
+A) IDSS / VP
+B) 2·IDSS / |VP|
+C) VP / IDSS
+D) IDSS·VP
+Answer: B
+Explanation: gm0 = 2·IDSS/|VP| is the maximum transconductance at VGS = 0.
+
+Q: Fixed bias input impedance equals:
+A) RD
+B) RG
+C) RS
+D) 1/gm
+Answer: B
+Explanation: In fixed-bias FET, the input impedance Zi = RG (gate resistor, typically very high).
+
+Q: Fixed bias output impedance equals:
+A) RG
+B) RS
+C) RD
+D) Zero
+Answer: C
+Explanation: In fixed-bias FET, the output impedance Zo = RD.
+
+Q: Voltage gain (fixed bias) equals:
+A) gm·RD
+B) −gm·RD
+C) 1 + gm·RS
+D) RG / RD
+Answer: B
+Explanation: The voltage gain of a fixed-bias FET amplifier is Av = −gm·RD.
+
+Q: Negative sign in gain indicates:
+A) Zero gain
+B) Phase inversion
+C) Saturation
+D) Cutoff
+Answer: B
+Explanation: The negative sign in Av = −gm·RD indicates a 180° phase inversion.
+
+Q: In self-bias (unbypassed RS), gain equals:
+A) −gm·RD
+B) −gm·RD / (1 + gm·RS)
+C) RD / RS
+D) gm·RS
+Answer: B
+Explanation: With unbypassed RS, Av = −gm·RD / (1 + gm·RS) due to negative feedback.
+
+Q: Increasing RS (unbypassed) will:
+A) Increase gain
+B) Decrease gain
+C) Not affect gain
+D) Increase IDSS
+Answer: B
+Explanation: Increasing RS increases the denominator in Av = −gm·RD/(1+gm·RS), decreasing |Av|.
+
+Q: Amplifier must operate in:
+A) Ohmic region
+B) Cutoff
+C) Saturation
+D) Breakdown
+Answer: C
+Explanation: FET amplifiers must operate in the saturation (active) region for proper amplification.
+
+Q: BJT amplifier operates in:
+A) Cutoff
+B) Saturation
+C) Forward active
+D) Breakdown
+Answer: C
+Explanation: BJT amplifiers operate in the forward active region for linear amplification.
+
+Q: AC equivalent model removes:
+A) Resistances
+B) Capacitors
+C) DC sources
+D) gm
+Answer: C
+Explanation: The AC equivalent model replaces DC sources with short circuits (AC ground).
+
+Q: Increasing gm increases:
+A) Input impedance
+B) Output impedance
+C) Voltage gain magnitude
+D) Breakdown voltage
+Answer: C
+Explanation: Since |Av| = gm·RD, increasing gm increases the voltage gain magnitude.
+
+Q: If gm = 2mS and RD = 2kΩ, gain ≈
+A) -4
+B) 4
+C) -0.004
+D) 0.004
+Answer: A
+Explanation: Av = −gm·RD = −(0.002)(2000) = −4.
+
+Q: Larger electron mobility results in:
+A) Lower speed
+B) Higher speed
+C) Lower gain
+D) Cutoff
+Answer: B
+Explanation: Higher electron mobility means carriers move faster, resulting in higher device speed.

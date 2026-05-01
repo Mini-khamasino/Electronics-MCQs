@@ -1,0 +1,230 @@
+================================================================================
+QUESTION EXTRACTION STRATEGY FOR ELECTRONICS II WRITTEN QUESTIONS
+================================================================================
+
+PURPOSE:
+--------
+This document outlines the strategy for extracting written problem questions 
+from lecture PDFs and building the structured JSON format required by the 
+MultiQuiz web application.
+
+MISSING QUESTIONS IDENTIFIED:
+-----------------------------
+The following written questions are missing from calc-questions.js:
+
+LECTURE 7 (Op-Amp Applications):
+  - Example 3.4 (Missing - need to extract)
+  - Example 3.5 (Missing - need to extract)
+  - Example 3.7 (Missing - need to extract)
+  - Example 3.10 (Missing - need to extract)
+
+Currently we have: 3.6, 3.8, 3.9 (total 3/7 questions)
+
+NOTE: Similar gaps may exist in lectures 1-6. Run the audit script to verify
+all chapters have complete question coverage.
+
+================================================================================
+EXTRACTION WORKFLOW - STEP BY STEP
+================================================================================
+
+STAGE 1: PDF EXTRACTION & SCREENSHOT CAPTURE
+---------------------------------------------
+
+Tools Required:
+  - PyPDF2 or pdfplumber (Python)
+  - pdf2image (for rendering pages)
+  - Pillow (for image manipulation)
+
+Steps:
+  1. Load the lecture PDF (e.g., "Electronics2 - Lec7.pdf")
+  2. Search for Example/Problem markers (3.4, 3.5, 3.7, 3.10)
+  3. Render PDF pages to images at high DPI (300 DPI recommended)
+  4. Save question area as: Electronics-2/questions_data/ch7/4/question.png
+  5. Save answer/solution area as: Electronics-2/questions_data/ch7/4/answer.png
+  
+Directory Structure:
+  Electronics-2/
+  └── questions_data/
+      └── ch7/
+          ├── 1/
+          │   ├── question.png
+          │   └── answer.png
+          ├── 2/
+          │   ├── question.png
+          │   └── answer.png
+          ├── 3/
+          │   ├── question.png
+          │   └── answer.png
+          ├── 4/          ← NEW (Example 3.4)
+          │   ├── question.png
+          │   └── answer.png
+          ├── 5/          ← NEW (Example 3.5)
+          │   ├── question.png
+          │   └── answer.png
+          ...
+
+STAGE 2: MANUAL DATA EXTRACTION
+--------------------------------
+
+For each question, extract:
+
+  A. Question Title & Description:
+     - Format: "Example X.Y — [Topic Name]"
+     - Extract from PDF text
+     - Create concise description (50-100 chars)
+
+  B. Input Fields (what to solve for):
+     - Identify all variables to calculate
+     - Note units (Ω, V, mA, μA, etc.)
+     - Default tolerance: 2-5% of answer
+
+  C. Correct Answers:
+     - Calculate or extract from solution
+     - Record with appropriate precision
+     - Set realistic tolerance values
+
+  D. Solution Images:
+     - Capture solution steps
+     - Include derivations
+     - Can be 1-3 images per question
+
+STAGE 3: JSON STRUCTURE BUILDING
+---------------------------------
+
+Template for each question entry:
+
+{
+  "id": "written_ch7_4",                          // ch{chapter}_{number}
+  "title": "Example 3.4 — [Topic]",              // Exact example number
+  "description": "Analyze [circuit/system]...",   // What to find
+  "questionImg": "Electronics-2/questions_data/ch7/4/question.png",
+  "solutionImgs": [                              // Can be multiple steps
+    "Electronics-2/questions_data/ch7/4/answer.png"
+  ],
+  "fields": [                                     // What student must calculate
+    {
+      "label": "Variable Name",                   // e.g., "Vo", "Zi", "gm"
+      "unit": "V",                                // e.g., "V", "mA", "kΩ", ""
+      "answer": 5.25,                             // Correct numeric answer
+      "tolerance": 0.25                           // ±0.25 (absolute) or use % algorithm
+    },
+    // ... more fields
+  ]
+}
+
+Tolerance Strategy:
+  - For small values (< 100): Use absolute tolerance (e.g., ±0.5)
+  - For large values: Use percentage (e.g., 5% = answer * 0.05)
+  - Physics calculations: Use ±2-3% to account for rounding
+  - Engineering values: Use ±5-10% for practical tolerance
+
+STAGE 4: UPDATE CALC-QUESTIONS.JS
+----------------------------------
+
+Location in file: Search for "lec7": [
+  
+Add new question objects to the array:
+
+"lec7": [
+  { existing: "written_ch7_1" },
+  { existing: "written_ch7_2" },
+  { existing: "written_ch7_3" },
+  { NEW: "written_ch7_4" },      // Example 3.4
+  { NEW: "written_ch7_5" },      // Example 3.5
+  { NEW: "written_ch7_7" },      // Example 3.7 (skip 3.6, already exists)
+  { NEW: "written_ch7_10" }      // Example 3.10
+]
+
+STAGE 5: VERIFICATION
+---------------------
+
+Check after adding questions:
+  ✓ All image paths exist
+  ✓ ID format is consistent (written_chX_Y)
+  ✓ All answers are numeric values
+  ✓ All tolerances are positive numbers
+  ✓ No duplicate IDs across chapters
+  ✓ Math functions properly in browser validation
+  ✓ Test each question manually in the app
+
+================================================================================
+FULL AUDIT: CHECKING ALL CHAPTERS
+================================================================================
+
+Current Status:
+  Lecture 1: ch1 → expects 4 questions ✓
+  Lecture 2: ch2 → expects 2 questions ✓
+  Lecture 3: ch3 → expects 2 questions ✓
+  Lecture 4: ch4 → expects 4 questions ✓
+  Lecture 6: ch6 → expects 3 questions ✓
+  Lecture 7: ch7 → expects 7 questions (has 3, missing 4)  ✗
+
+To verify lecture-to-PDF mapping, count examples in each lecture PDF and
+compare against questions_data folders.
+
+================================================================================
+PYTHON SCRIPT USAGE (see extract_questions.py for full implementation)
+================================================================================
+
+Command:
+  python extract_questions.py --lecture 7 --examples 3.4,3.5,3.7,3.10
+
+Parameters:
+  --lecture {1-7}         : Which lecture to process
+  --examples {3.4,3.5}    : Comma-separated example numbers to extract
+  --dpi {300}             : PDF rendering DPI (higher = better, slower)
+  --output-dir            : Where to save images
+  --auto-json             : Generate partial JSON from extracted data
+
+Output:
+  - Images saved to Electronics-2/questions_data/ch{N}/{example}/
+  - JSON template printed to console for manual data entry
+  - Extraction report showing what was found
+
+================================================================================
+FINAL CHECKLIST BEFORE DEPLOYMENT
+================================================================================
+
+After extracting all missing questions:
+
+□ All image files exist and are accessible (test with browser)
+□ No broken image links in calc-questions.js
+□ All JSON is valid (no syntax errors)
+□ Questions load in app without console errors
+□ Can submit answers and get validation feedback
+□ Solution images display correctly when clicked
+□ Tolerance validation works for all new questions
+
+================================================================================
+IMPORTANT NOTES FOR AI MODELS
+================================================================================
+
+1. PDF READING: Use pdfplumber library for best results:
+   - More reliable than PyPDF2 for text extraction
+   - Can read tables and structured data
+   - Supports image extraction from PDFs
+
+2. IMAGE CROPPING: When saving question/answer images:
+   - Exclude page numbers and headers
+   - Use consistent margins (20-30px)
+   - Save at 150-200 DPI minimum
+   - Use PNG format for lossless quality
+
+3. TOLERANCE VALUES: For real engineering problems:
+   - Check if PDF shows ±tolerance range
+   - If not specified, use 2-3% for calculated values
+   - Wider tolerance (5-10%) for circuits with multiple stages
+   - Include measurement device accuracy in tolerance
+
+4. FIELD EXTRACTION: Common patterns in problem sets:
+   - "Determine [variables] given [known values]"
+   - "Calculate [output] for the circuit shown"
+   - "Find the [parameter] in the table below"
+   - Parse carefully to identify ALL variables to solve for
+
+5. VERSIONING: Keep backup of original calc-questions.js:
+   - Create calc-questions.js.backup before major changes
+   - Track what was added in a CHANGES.log file
+   - Git commit after successful deployment
+
+================================================================================

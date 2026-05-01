@@ -1,0 +1,8 @@
+Title: Example 2.1 — FET Fixed-Bias
+Description: FET fixed-bias: VGSQ=-2V, IDQ=5.625mA, IDSS=10mA, VP=-8V. Determine gm, Zi, Zo, Av.
+
+Fields:
+gm | mS | 1.875 | 0.1
+Zi | MΩ | 1 | 0.1
+Zo | kΩ | 2 | 0.1
+Av |  | -3.75 | 0.2

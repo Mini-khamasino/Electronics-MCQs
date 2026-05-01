@@ -1,0 +1,9 @@
+Title: Sheet 1 Q2 — Voltage-Divider Bias Small-Signal Analysis
+Description: Find Zi, Zo, Av and Ai for the Voltage Divider Bias circuit shown in Figure 2. VCC=22V, R1=56kΩ, R2=8.2kΩ, RC=6.8kΩ, RE=1.5kΩ, β=90.
+
+Fields:
+re | Ω | 18.44 | 1
+Zi | kΩ | 1.35 | 0.1
+Zo | kΩ | 6.8 | 0.2
+Av |  | -368.76 | 10
+Ai |  | 73.04 | 3

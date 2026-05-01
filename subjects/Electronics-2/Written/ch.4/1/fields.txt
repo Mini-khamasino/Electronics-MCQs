@@ -1,0 +1,7 @@
+Title: Example 2.3 — Source-Follower (CD)
+Description: Source-follower network: VGSQ=-2.86V, IDQ=4.56mA. Determine gm, rd, Zi, Zo, Av.
+
+Fields:
+gm | mS | 2.14 | 0.15
+Zi | MΩ | 10 | 1
+Av |  | 0.83 | 0.05

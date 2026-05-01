@@ -1,0 +1,8 @@
+Title: Sheet 1 Q1 — Voltage-Divider Bias DC Analysis
+Description: For the circuit in Figure 1 (VCC=15V, R1=27kΩ, R2=6.8kΩ, RC=2.2kΩ, RE=1kΩ), find VB, VE, IE, IC, VC.
+
+Fields:
+VB | V | 3.02 | 0.1
+VE | V | 2.32 | 0.1
+IE | mA | 2.32 | 0.1
+VC | V | 9.90 | 0.2

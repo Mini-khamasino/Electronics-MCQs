@@ -1,0 +1,366 @@
+================================================================================
+LECTURE 7 MISSING QUESTIONS - DATA EXTRACTION TEMPLATE
+================================================================================
+
+SUMMARY:
+--------
+Lecture 7 (Op-Amp Applications) should have 7 examples (3.4 - 3.10) but only
+3 are currently in calc-questions.js (3.6, 3.8, 3.9).
+
+MISSING 4 EXAMPLES:
+  ✗ Example 3.4
+  ✗ Example 3.5
+  ✗ Example 3.7
+  ✗ Example 3.10
+
+CURRENTLY HAVE:
+  ✓ Example 3.6 (written_ch7_1)
+  ✓ Example 3.8 (written_ch7_2)
+  ✓ Example 3.9 (written_ch7_3)
+
+================================================================================
+EXTRACTION PROCESS FOR EACH MISSING QUESTION
+================================================================================
+
+For each example, follow these steps:
+
+1. LOCATE IN PDF
+   - File: Electronics2 - Lec7.pdf
+   - Search for: "Example 3.X" or "Problem 3.X"
+   - Note the page numbers
+
+2. EXTRACT QUESTION IMAGE
+   - Screenshot the problem statement (circuit diagram + problem text)
+   - Save as PNG file
+   - Target location: Electronics-2/questions_data/ch7/{N}/question.png
+   
+3. EXTRACT ANSWER IMAGE
+   - Screenshot the solution steps and final answer
+   - Can be multiple pages if solution is long
+   - Save each as PNG file
+   - Target location: Electronics-2/questions_data/ch7/{N}/answer.png
+   
+4. EXTRACT DATA
+   - Read the problem and identify:
+     * Title/topic
+     * What values are GIVEN (parameters)
+     * What values to CALCULATE (fields)
+     * Units for each field
+     * Correct numeric answers
+   
+5. ADD TO JSON
+   - Create properly formatted JSON object
+   - Use template below
+   - Add to lec7 array in calc-questions.js
+
+================================================================================
+EXAMPLE 3.4 - TEMPLATE & EXTRACTION GUIDE
+================================================================================
+
+Step 1: Find in PDF
+  Location: Electronics2 - Lec7.pdf
+  Search for: "Example 3.4" or "Problem 3.4"
+  
+Step 2: Extract Title
+  Look for text like: "Example 3.4 — [Topic Name]"
+  Store in: "title" field
+  Example: "Example 3.4 — Differentiator Circuit Analysis"
+  
+Step 3: Extract Description
+  From the problem statement, find the question like:
+  "Determine [variables] for the shown circuit"
+  Store in: "description" field
+  
+Step 4: Extract Fields
+  Identify all variables to calculate:
+  - Variable name (from problem or diagram)
+  - Metric units (V, mA, kΩ, μA, etc.)
+  - Correct answer (calculate or from solution)
+  - Tolerance (typically 2-5% or absolute value)
+  
+  Example fields for an op-amp problem might be:
+  {
+    "label": "Vo",      // Output voltage
+    "unit": "V",
+    "answer": 5.25,
+    "tolerance": 0.25
+  }
+  
+Step 5: Generate JSON
+  
+  {
+    "id": "written_ch7_4",
+    "title": "Example 3.4 — [Extracted from PDF]",
+    "description": "[What to determine]",
+    "questionImg": "Electronics-2/questions_data/ch7/4/question.png",
+    "solutionImgs": [
+      "Electronics-2/questions_data/ch7/4/answer.png"
+    ],
+    "fields": [
+      {
+        "label": "[Variable 1]",
+        "unit": "[Unit]",
+        "answer": [Number],
+        "tolerance": [Number]
+      },
+      // ... additional fields
+    ]
+  }
+
+Step 6: Add to calc-questions.js
+  Location: After written_ch7_3, before the closing bracket of "lec7" array
+  Add comma after previous question object if needed
+
+================================================================================
+EXAMPLE 3.5 - TEMPLATE & EXTRACTION GUIDE
+================================================================================
+
+LOCATION IN PDF:
+  File: Electronics2 - Lec7.pdf
+  Search for: "Example 3.5"
+  
+DATA TO EXTRACT:
+  □ Problem statement (screenshot → question.png)
+  □ Solution steps (screenshot → answer.png)
+  □ Topic/Title
+  □ Description of what to find
+  □ All input variables and their values
+  □ Output variables to calculate
+  □ Correct answers with tolerance
+
+JSON TEMPLATE:
+
+{
+  "id": "written_ch7_5",
+  "title": "Example 3.5 — [Topic]",
+  "description": "[Problem description]",
+  "questionImg": "Electronics-2/questions_data/ch7/5/question.png",
+  "solutionImgs": [
+    "Electronics-2/questions_data/ch7/5/answer.png"
+  ],
+  "fields": [
+    {
+      "label": "[Variable]",
+      "unit": "[Unit]",
+      "answer": [Numeric Answer],
+      "tolerance": [Tolerance]
+    }
+  ]
+}
+
+IMPORTANT NOTES:
+  - Verify field names match what the problem asks for
+  - Units should match PDF and real engineering practice
+  - Tolerance should reflect measurement/rounding accuracy
+  - Include all intermediate calculations if they're asked for
+
+================================================================================
+EXAMPLE 3.7 - TEMPLATE & EXTRACTION GUIDE
+================================================================================
+
+LOCATION IN PDF:
+  File: Electronics2 - Lec7.pdf
+  Search for: "Example 3.7"
+  Note: Will be BETWEEN 3.6 and 3.8 in the PDF
+  
+DATA TO EXTRACT:
+  □ Screenshot problem statement → Electronics-2/questions_data/ch7/7/question.png
+  □ Screenshot solution → Electronics-2/questions_data/ch7/7/answer.png
+  □ Extract all requested variables
+  □ Find correct answers in solution
+  
+JSON TEMPLATE:
+
+{
+  "id": "written_ch7_7",
+  "title": "Example 3.7 — [Topic from PDF]",
+  "description": "[What needs to be determined]",
+  "questionImg": "Electronics-2/questions_data/ch7/7/question.png",
+  "solutionImgs": [
+    "Electronics-2/questions_data/ch7/7/answer.png"
+  ],
+  "fields": [
+    // Add fields extracted from problem
+  ]
+}
+
+EXTRACTION TIPS:
+  - Read the problem carefully to identify ALL variables
+  - Some circuits have multiple stages - get all calculations
+  - Check solution for numerical values
+  - Look for given values vs. calculated values in tables
+
+================================================================================
+EXAMPLE 3.10 - TEMPLATE & EXTRACTION GUIDE
+================================================================================
+
+LOCATION IN PDF:
+  File: Electronics2 - Lec7.pdf
+  Search for: "Example 3.10"
+  This is the LAST example in this section
+  Will be near end of lecture 7 PDF
+  
+SCREENSHOT TARGETS:
+  Question: Electronics-2/questions_data/ch7/10/question.png
+  Solution: Electronics-2/questions_data/ch7/10/answer.png
+  Note: 10 not 1 for directory name (since it's 3.10)
+  
+JSON TEMPLATE:
+
+{
+  "id": "written_ch7_10",
+  "title": "Example 3.10 — [Topic]",
+  "description": "[Problem statement summary]",
+  "questionImg": "Electronics-2/questions_data/ch7/10/question.png",
+  "solutionImgs": [
+    "Electronics-2/questions_data/ch7/10/answer.png"
+  ],
+  "fields": [
+    // Extract from problem and solution
+  ]
+}
+
+VALIDATION:
+  After adding this question, verify:
+  - All image files exist
+  - JSON syntax is valid
+  - All fields have numeric answers
+  - Tolerance values are positive
+  - Directory is ch7/10/ not ch7/1/0/
+
+================================================================================
+FORMATTING RULES FOR ADDING TO CALC-QUESTIONS.JS
+================================================================================
+
+LOCATION TO ADD:
+
+In the "lec7" array, add the new question objects BETWEEN existing ones,
+maintaining alphabetical order by example number:
+
+"lec7": [
+  { ... written_ch7_1 (3.6) ... },
+  { ... written_ch7_4 (3.4) ... },      ← NEW
+  { ... written_ch7_5 (3.5) ... },      ← NEW
+  { ... written_ch7_7 (3.7) ... },      ← NEW
+  { ... written_ch7_2 (3.8) ... },
+  { ... written_ch7_3 (3.9) ... },
+  { ... written_ch7_10 (3.10) ... },    ← NEW
+]
+
+OR order by ID (easier):
+
+"lec7": [
+  { ... written_ch7_1 ... },
+  { ... written_ch7_2 ... },
+  { ... written_ch7_3 ... },
+  { ... written_ch7_4 ... },            ← NEW
+  { ... written_ch7_5 ... },            ← NEW
+  { ... written_ch7_7 ... },            ← NEW
+  { ... written_ch7_10 ... },           ← NEW
+]
+
+COMMA RULES:
+  ✓ Add comma after each question object EXCEPT the last one
+  ✓ Final question should NOT have trailing comma
+  
+Example:
+  {
+    "id": "written_ch7_4",
+    ...
+  },  ← COMMA (if not last)
+  {
+    "id": "written_ch7_5",
+    ...
+  }   ← NO COMMA (if last)
+
+JSON VALIDATION:
+  After editing, validate syntax:
+  - Use online JSON validator (jsonlint.com)
+  - Or run: python -m json.tool calc-questions.js
+  - Test in browser to ensure questions load
+
+================================================================================
+TOLERANCE EXTRACTION GUIDE
+================================================================================
+
+If PDF shows tolerance:
+  Use the shown tolerance value
+  
+If PDF shows rounding guidelines:
+  Follow precision (e.g., 2 decimal places → tolerance 0.01)
+  
+If no guidance given:
+  Use these defaults based on value range:
+  
+  Value < 10:           Tolerance = ±0.1 to ±0.5
+  Value 10-100:         Tolerance = ±1 to ±2
+  Value 100-1000:       Tolerance = ±5 to ±10
+  Value > 1000:         Tolerance = ±50 to ±100
+  
+  OR use percentage (2-5% of answer):
+  calculated_answer * 0.05  (5% tolerance)
+  
+For component values:
+  Resistors:            Tolerance = ±5-10% (1-10 kΩ range)
+  Frequencies:          Tolerance = ±2-5%
+  Voltages:             Tolerance = ±0.1-0.5 V
+
+IMPORTANT:
+  - Tolerance should NOT be too tight (user can't get exact answer)
+  - Tolerance should NOT be too loose (defeats the learning purpose)
+  - Include intermediate calculation tolerances
+
+================================================================================
+QUICK REFERENCE - CALC-QUESTIONS.JS STRUCTURE
+================================================================================
+
+File structure:
+
+var CALC_QUESTIONS = {
+  "lec1": [ { questions... } ],
+  "lec2": [ { questions... } ],
+  ...
+  "lec7": [
+    { "id": "written_ch7_1", ... },
+    { "id": "written_ch7_2", ... },
+    { "id": "written_ch7_3", ... }
+    // ADD NEW ONES HERE IN ORDER
+  ]
+};
+
+var CALC_TOPIC_META = {
+  "lec7": {
+    "name": "Op-Amp Applications",
+    "icon": "📊",
+    "sheet": "Lecture 7",
+    "total_examples": 7  // UPDATE THIS
+  }
+};
+
+================================================================================
+AFTER ADDING ALL QUESTIONS
+================================================================================
+
+Verification Checklist:
+
+□ All image files created (question.png + answer.png for each)
+□ File paths are correct in JSON
+□ All image files exist and can be opened
+□ JSON is valid (no syntax errors)
+□ Each question has at least one field to calculate
+□ All answers are numeric
+□ All tolerances are positive numbers
+□ File loads in browser without errors
+□ Can click and view all questions
+□ Answer submission and validation works
+□ Solution images display properly
+
+Run audit script to verify:
+  python audit_questions_simple.py
+  
+Should show:
+  ✓ CHAPTER 7 (Examples 3.4-3.10):
+      Found: 7/7 (100.0%)
+      ✓ Complete!
+
+================================================================================

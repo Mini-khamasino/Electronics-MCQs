@@ -1,0 +1,5 @@
+Title: Example 3.3 — Op-Amp Impedance
+Description: Find Zin(CL), Zout(CL), and closed-loop voltage gain. Zin=4MΩ, Zout=50Ω, Aol=50,000.
+
+Fields:
+Acl |  | -10 | 0.5

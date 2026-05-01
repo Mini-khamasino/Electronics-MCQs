@@ -1,0 +1,7 @@
+Title: Example 2.6 — E-MOSFET Analysis
+Description: E-MOSFET: VGSQ=6.4V, IDQ=2.75mA, Yos=20μS, k=0.24×10⁻³. Determine gm, rd, Zi, Zo, Av.
+
+Fields:
+gm | mS | 1.32 | 0.1
+rd | kΩ | 50 | 5
+Av |  | -3.41 | 0.3

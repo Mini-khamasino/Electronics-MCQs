@@ -1,0 +1,9 @@
+Title: Example 1.5 — CE Fixed-Bias Amplifier
+Description: Determine Zi, Zo, Av, Ai for the fixed bias CE amplifier. VCC=12V, RB=470kΩ, RC=3kΩ, β=100, ro=50kΩ.
+
+Fields:
+re | Ω | 10.7 | 0.5
+Zi | kΩ | 1.069 | 0.05
+Zo | kΩ | 3 | 0.1
+Av |  | -280.11 | 5
+Ai |  | 99.77 | 2

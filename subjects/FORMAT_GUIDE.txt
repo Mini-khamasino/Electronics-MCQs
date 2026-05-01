@@ -1,0 +1,183 @@
+╔══════════════════════════════════════════════════════════════╗
+║             📖 HOW TO ADD QUESTIONS — FORMAT GUIDE          ║
+╚══════════════════════════════════════════════════════════════╝
+
+This guide explains how to add new subjects, MCQs, True/False,
+and Written questions WITHOUT writing any code.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  STEP 1: FOLDER STRUCTURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+subjects/
+├── [Subject Name]/         ← Create a folder for each subject
+│   ├── _config.txt         ← Subject name, icon, description
+│   ├── MCQ/                ← Multiple Choice Questions
+│   │   ├── ch.1 MCQs.txt   ← One file per topic
+│   │   └── ch.2 MCQs.txt
+│   ├── TF/                 ← True/False Questions
+│   │   ├── ch.1 TF.txt
+│   │   └── ch.2 TF.txt
+│   ├── Written/            ← Written/Calculation Problems
+│   │   ├── ch.1/
+│   │   │   ├── 1/          ← Question 1
+│   │   │   │   ├── question.png
+│   │   │   │   ├── answer.png
+│   │   │   │   └── fields.txt
+│   │   │   └── 2/          ← Question 2
+│   │   │       ├── question.png
+│   │   │       ├── answer1.png
+│   │   │       ├── answer2.png
+│   │   │       └── fields.txt
+│   │   └── ch.2/
+│   └── resources/          ← NOT shown on web (ignored)
+
+RECOGNIZED FOLDERS (case-sensitive):
+  ✅ MCQ      → Multiple choice questions
+  ✅ TF       → True/False questions
+  ✅ Written  → Written/calculation problems
+  ❌ resources → Ignored (store your PDFs, notes, etc.)
+  ❌ anything else → Ignored
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  STEP 2: _config.txt FORMAT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Name: Your Subject Name
+Icon: 📚
+Description: A short description of the subject
+
+Example:
+  Name: Physics I
+  Icon: 🔬
+  Description: Mechanics, thermodynamics and waves
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  STEP 3: MCQ FILE FORMAT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+File name: anything.txt  (inside the MCQ/ folder)
+Recommended naming: ch.1 MCQs.txt, sh.2 MCQs.txt, etc.
+
+Format:
+
+Q: Your question text goes here?
+A) First option
+B) Second option
+C) Third option
+D) Fourth option
+Answer: C
+Explanation: Why C is correct.
+
+Q: Another question?
+A) Option A
+B) Option B
+C) Option C
+D) Option D
+Answer: A
+Explanation: Why A is correct.
+
+RULES:
+• Each question starts with "Q: "
+• Options use A) B) C) D) format
+• Answer is a single letter: A, B, C, or D
+• Explanation is optional but recommended
+• Separate questions with a blank line
+• You can have 2-4 options per question
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  STEP 4: TRUE/FALSE FILE FORMAT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+File name: anything.txt  (inside the TF/ folder)
+
+Format:
+
+Q: A BJT is a voltage controlled device.
+Answer: False
+Explanation: A BJT is current controlled (by IB).
+
+Q: FET has very high input impedance.
+Answer: True
+Explanation: The gate is insulated or reverse-biased.
+
+RULES:
+• Each question starts with "Q: "
+• Answer is either "True" or "False"
+• Explanation is optional but recommended
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  STEP 5: WRITTEN QUESTION FORMAT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Each question is a numbered folder inside a chapter folder.
+
+Structure:
+  Written/ch.1/1/
+    ├── question.png    ← Screenshot of the question
+    ├── answer.png      ← Screenshot of the solution
+    └── fields.txt      ← Required values to check
+
+If you have multiple answer pages:
+    ├── answer1.png
+    ├── answer2.png
+    └── answer3.png
+
+fields.txt format:
+
+Title: Example 1.1 — DC Transistor Basics
+Description: Determine β, α, IE given IB=50μA and IC=3.65mA.
+
+Fields:
+β |  | 73 | 2
+α |  | 0.986 | 0.01
+IE | mA | 3.7 | 0.05
+
+FIELDS FORMAT: Label | Unit | Answer | Tolerance
+  • Label: What the student needs to find (e.g., "Zi", "Av", "gm")
+  • Unit: The unit (e.g., "kΩ", "mA", "V"), leave empty if unitless
+  • Answer: The correct numerical answer
+  • Tolerance: How close the student's answer needs to be
+  • Separate fields with pipe | characters
+
+If a question has NO fields (just view question + solution):
+  Just include Title and Description, skip the Fields: section.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  STEP 6: BUILD & TEST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+After adding/editing questions:
+
+  1. Open a terminal in this folder
+  2. Run: node build.js
+  3. Open index.html in a browser to test
+
+The build script will:
+  ✅ Scan all subject folders automatically
+  ✅ Parse all MCQ, TF, and Written question files
+  ✅ Generate subjects.js, questions.js, and calc-questions.js
+  ✅ Report any issues it finds
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  EXAMPLES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ADDING A NEW SUBJECT:
+  1. Create folder: subjects/Physics-1/
+  2. Create: subjects/Physics-1/_config.txt
+  3. Create: subjects/Physics-1/MCQ/
+  4. Add: subjects/Physics-1/MCQ/ch.1 MCQs.txt
+  5. Run: node build.js
+
+ADDING NEW MCQ TOPIC:
+  1. Create new .txt file in the MCQ/ folder
+  2. Follow the Q:/A)/B)/C)/D)/Answer:/Explanation: format
+  3. Run: node build.js
+
+ADDING NEW WRITTEN QUESTION:
+  1. Create numbered folder: Written/ch.1/5/
+  2. Add question.png (screenshot of the question)
+  3. Add answer.png (screenshot of the solution)
+  4. Add fields.txt (values to check)
+  5. Run: node build.js

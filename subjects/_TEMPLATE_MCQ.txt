@@ -1,0 +1,15 @@
+Q: [Your question here]?
+A) [Option A]
+B) [Option B]
+C) [Option C]
+D) [Option D]
+Answer: [A/B/C/D]
+Explanation: [Why the answer is correct]
+
+Q: [Another question]?
+A) [Option A]
+B) [Option B]
+C) [Option C]
+D) [Option D]
+Answer: [A/B/C/D]
+Explanation: [Explanation text]

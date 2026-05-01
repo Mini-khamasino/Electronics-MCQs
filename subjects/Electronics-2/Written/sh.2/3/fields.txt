@@ -1,0 +1,8 @@
+Title: Sheet 2 P2 Q3 — Fixed-Bias FET Design for Av=10
+Description: Design the fixed-bias network in Figure 3 to have ac gain of 10. VDD=30V, IDSS=10mA, VP=-4V, yos=20μS, RG=10MΩ. Determine RD.
+
+Fields:
+gm0 | mS | 5 | 0.2
+gm | mS | 5 | 0.2
+rd | kΩ | 50 | 3
+RD | kΩ | 2.22 | 0.15

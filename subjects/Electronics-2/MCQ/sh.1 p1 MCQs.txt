@@ -1,0 +1,335 @@
+Q: A BJT consists of how many semiconductor layers?
+A) 1
+B) 2
+C) 3
+D) 4
+Answer: C
+Explanation: A BJT has three semiconductor layers: Emitter, Base, and Collector.
+
+Q: The emitter region of a BJT is:
+A) Lightly doped and thin
+B) Heavily doped and thin
+C) Heavily doped and thick
+D) Lightly doped and thick
+Answer: B
+Explanation: The emitter is heavily doped to inject maximum carriers into the base.
+
+Q: The base region of a BJT is:
+A) Thin and heavily doped
+B) Thick and lightly doped
+C) Thin and lightly doped
+D) Thick and heavily doped
+Answer: C
+Explanation: The base is thin and lightly doped so most carriers pass through to the collector.
+
+Q: The collector region of a BJT is:
+A) Moderately doped and thick
+B) Heavily doped and thin
+C) Lightly doped and thin
+D) Heavily doped and thick
+Answer: A
+Explanation: The collector is moderately doped and larger to collect carriers and dissipate heat.
+
+Q: In an NPN transistor, the majority carriers in the emitter are:
+A) Holes
+B) Electrons
+C) Both holes and electrons equally
+D) None
+Answer: B
+Explanation: In NPN, the emitter is n-type, so the majority carriers are electrons.
+
+Q: Why is the collector region made larger than the emitter?
+A) To reduce cost
+B) To improve frequency response
+C) To dissipate more heat
+D) To reduce recombination
+Answer: C
+Explanation: The larger collector area allows better heat dissipation during operation.
+
+Q: Which BJT configuration provides the highest current gain (β)?
+A) Common Base
+B) Common Emitter
+C) Common Collector
+D) None
+Answer: B
+Explanation: Common Emitter provides the highest current gain β = IC/IB.
+
+Q: Which configuration provides the highest input resistance?
+A) Common Base
+B) Common Emitter
+C) Common Collector
+D) All equal
+Answer: C
+Explanation: Common Collector (emitter follower) has the highest input impedance ≈ β·RE.
+
+Q: Which configuration provides the highest voltage gain?
+A) Common Base
+B) Common Emitter
+C) Common Collector
+D) None
+Answer: A
+Explanation: Common Base provides the highest voltage gain (Av = RC/re) with no phase inversion.
+
+Q: Which configuration has a phase shift of 180° between input and output?
+A) Common Base
+B) Common Emitter
+C) Common Collector
+D) None
+Answer: B
+Explanation: Only Common Emitter introduces a 180° phase shift between input and output.
+
+Q: Which configuration is also called an emitter follower?
+A) Common Base
+B) Common Emitter
+C) Common Collector
+D) None
+Answer: C
+Explanation: Common Collector is called emitter follower because the output follows the input (Av ≈ 1).
+
+Q: In a common-base transistor, the current gain (α) is typically:
+A) Less than 0.5
+B) Between 0.9 and 0.99
+C) Equal to β
+D) Greater than 100
+Answer: B
+Explanation: α = IC/IE is always less than 1, typically between 0.9 and 0.99.
+
+Q: The configuration most suitable for impedance matching is:
+A) CB
+B) CE
+C) CC
+D) None
+Answer: C
+Explanation: CC (emitter follower) has high Zin and low Zout, ideal for impedance matching/buffering.
+
+Q: The total current flowing into a transistor is:
+A) IE = IB + IC
+B) IC = IE + IB
+C) IB = IE + IC
+D) None
+Answer: A
+Explanation: By KCL, the emitter current equals the sum of base and collector currents: IE = IB + IC.
+
+Q: In a transistor, the largest current is usually:
+A) Base current IB
+B) Collector current IC
+C) Emitter current IE
+D) All are equal
+Answer: C
+Explanation: IE = IB + IC, so emitter current is the largest.
+
+Q: If the emitter current is 10 mA and base current is 0.2 mA, the collector current is:
+A) 9.8 mA
+B) 10.2 mA
+C) 9.6 mA
+D) 0.2 mA
+Answer: A
+Explanation: IC = IE − IB = 10 − 0.2 = 9.8 mA.
+
+Q: The relation between current gain in common base (α) and common emitter (β) is:
+A) β = α/(1−α)
+B) α = β/(1+β)
+C) Both a & b
+D) None
+Answer: C
+Explanation: Both relations are equivalent: β = α/(1−α) and α = β/(1+β).
+
+Q: If α = 0.98, then β is approximately:
+A) 25
+B) 49
+C) 98
+D) 100
+Answer: B
+Explanation: β = α/(1−α) = 0.98/0.02 = 49.
+
+Q: If β = 100 and base current IB = 40μA, then collector current IC is:
+A) 4 mA
+B) 40 mA
+C) 0.4 mA
+D) 400 mA
+Answer: A
+Explanation: IC = β × IB = 100 × 40μA = 4000μA = 4 mA.
+
+Q: In a transistor, the smallest current is generally:
+A) Emitter current IE
+B) Collector current IC
+C) Base current IB
+D) None
+Answer: C
+Explanation: Base current IB is the smallest since IE = IB + IC and IC ≈ β·IB.
+
+Q: The purpose of transistor biasing is:
+A) To increase gain
+B) To keep the transistor in active region
+C) To reduce noise
+D) To increase frequency response
+Answer: B
+Explanation: Biasing establishes the DC operating point (Q-point) in the active region for proper amplification.
+
+Q: Which biasing method provides the best stability?
+A) Fixed bias
+B) Collector-to-base bias
+C) Voltage-divider bias
+D) None
+Answer: C
+Explanation: Voltage-divider bias provides the best Q-point stability against β variations.
+
+Q: In fixed bias, the base resistor is connected between:
+A) Base and ground
+B) Base and collector
+C) Base and supply VCC
+D) Collector and ground
+Answer: C
+Explanation: In fixed bias, RB connects from the base directly to VCC.
+
+Q: The DC operating point of a transistor is called:
+A) Load line
+B) Q-point
+C) Bias point
+D) Both b & c
+Answer: D
+Explanation: The DC operating point is called both Q-point (quiescent point) and bias point.
+
+Q: Which biasing method is most commonly used in amplifiers?
+A) Fixed bias
+B) Voltage-divider bias
+C) Emitter bias
+D) Collector feedback bias
+Answer: B
+Explanation: Voltage-divider bias is most common due to its excellent stability.
+
+Q: The small-signal model of a BJT is valid for:
+A) Large input signals
+B) Small input signals (mV range)
+C) Both small and large input signals
+D) DC signals only
+Answer: B
+Explanation: The small-signal model linearizes around the Q-point and is valid only for small AC signals.
+
+Q: In the AC equivalent circuit of a BJT, coupling capacitors are considered as:
+A) Open circuit
+B) Short circuit
+C) Resistors
+D) Current sources
+Answer: B
+Explanation: Coupling capacitors have very low reactance at signal frequencies, so they are treated as short circuits in AC analysis.
+
+Q: In AC equivalent analysis, the DC supply voltage VCC is considered as:
+A) Open circuit
+B) Short circuit (AC ground)
+C) Voltage source
+D) Current source
+Answer: B
+Explanation: DC supply has zero AC impedance, so VCC is treated as AC ground.
+
+Q: The small-signal voltage gain of a common-collector amplifier is approximately:
+A) Av ≈ 0
+B) Av ≈ 1
+C) Av ≈ −gm·RC
+D) Av ≈ β
+Answer: B
+Explanation: CC amplifier is an emitter follower with voltage gain close to 1.
+
+Q: In the fixed-bias CE circuit the base bias resistor RB is connected between:
+A) Base and collector
+B) Base and ground
+C) Base and VCC
+D) Base and emitter
+Answer: C
+Explanation: In a fixed-bias CE circuit, RB connects the base to VCC to set the base current.
+
+Q: In fixed bias, the DC collector current IC is primarily determined by:
+A) RC only
+B) RB only
+C) VCC only
+D) RB, VCC and transistor β
+Answer: D
+Explanation: IC = β·IB where IB = (VCC − VBE)/RB, so IC depends on RB, VCC, and β.
+
+Q: For a fixed-bias CE, if base-emitter voltage is assumed 0.7 V and RB increases, the collector current IC will:
+A) Increase
+B) Decrease
+C) Remain same
+D) Become zero
+Answer: B
+Explanation: IB = (VCC − 0.7)/RB. Increasing RB decreases IB, hence IC = β·IB decreases.
+
+Q: Given: VCC=12V, RB=240kΩ, RC=2kΩ, VBE=0.7V, β=100. Approximately find IC.
+A) 0.47 mA
+B) 4.71 mA
+C) 47.1 mA
+D) 0.047 mA
+Answer: B
+Explanation: IB = (12−0.7)/240k = 47.1μA, IC = β·IB = 100 × 47.1μA = 4.71 mA.
+
+Q: Given: VCC=12V, RB=240kΩ, RC=2kΩ, VBE=0.7V, β=100. Approximately find VCE.
+A) 9.42 V
+B) 2.58 V
+C) 12 V
+D) 0.7 V
+Answer: B
+Explanation: VCE = VCC − IC·RC = 12 − 4.71×2 = 12 − 9.42 = 2.58V.
+
+Q: If the transistor in fixed bias goes into saturation, which statement is true?
+A) IC = β·IB still holds exactly
+B) VCE falls close to VCE(sat) and IC no longer equals β·IB
+C) Base current becomes zero
+D) Collector resistor is bypassed
+Answer: B
+Explanation: In saturation, VCE drops to VCE(sat) ≈ 0.2V and the relation IC = β·IB no longer holds.
+
+Q: Which practical modification improves stability compared with fixed bias?
+A) Increasing RB only
+B) Voltage-divider bias or emitter-feedback (emitter resistor)
+C) Removing RC
+D) Reducing VCC to zero
+Answer: B
+Explanation: Adding an emitter resistor or using voltage-divider bias provides negative feedback that stabilizes the Q-point.
+
+Q: For small-signal AC analysis of a fixed-bias CE amplifier (with coupling capacitors large enough):
+A) The DC bias network appears as AC open circuit
+B) The DC supply VCC is AC ground
+C) RB is always removed for AC
+D) RC is bypassed by the coupling capacitor
+Answer: B
+Explanation: In AC analysis, VCC is treated as AC ground (zero impedance for AC).
+
+Q: In voltage-divider bias, the base voltage VB is approximately:
+A) VB = (R2/(R1+R2))·VCC
+B) VB = (R1/(R1+R2))·VCC
+C) VB = VCC
+D) VB = 0.7 V
+Answer: A
+Explanation: The voltage divider formed by R1 and R2 gives VB = R2·VCC/(R1+R2).
+
+Q: The emitter voltage in voltage-divider bias is given by:
+A) VE = VB − VBE
+B) VE = VB + VBE
+C) VE = VCC − VBE
+D) VE = IB·RB
+Answer: A
+Explanation: VE = VB − VBE (the base-emitter junction drops about 0.7V).
+
+Q: The collector voltage is approximately:
+A) VC = VCC − IC·RC
+B) VC = VB − VBE
+C) VC = IC·RE
+D) VC = VCC
+Answer: A
+Explanation: VC = VCC − IC·RC from KVL around the collector loop.
+
+Q: The emitter resistor RE in voltage-divider bias helps to:
+A) Reduce β dependence
+B) Increase input resistance
+C) Improve stability by negative feedback
+D) All of the above
+Answer: D
+Explanation: RE provides negative feedback, reduces β dependence, and improves both stability and input impedance.
+
+Q: If VCC=12V, R1=40kΩ, R2=10kΩ, find the base voltage VB.
+A) 3 V
+B) 2.4 V
+C) 9 V
+D) 12 V
+Answer: B
+Explanation: VB = R2·VCC/(R1+R2) = 10k×12/(40k+10k) = 120/50 = 2.4V.

@@ -1,0 +1,9 @@
+Title: Sheet 1 Q3 — CE Fixed-Bias Small-Signal Analysis
+Description: Find Zi, Zo, Av and Ai for the Common-Emitter Fixed Bias circuit in Figure 3. VCC=12V, RB=470kΩ, RC=3kΩ, β=100, ro=50kΩ.
+
+Fields:
+re | Ω | 10.71 | 0.5
+Zi | kΩ | 1.069 | 0.05
+Zo | kΩ | 3 | 0.1
+Av |  | -280.11 | 5
+Ai |  | 100 | 2

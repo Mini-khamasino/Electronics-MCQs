@@ -1,0 +1,331 @@
+Q: For a CC amplifier, the voltage gain is approximately:
+A) >> 1
+B) << 1
+C) ≈ 1
+D) Negative
+Answer: C
+Explanation: CC amplifier (emitter follower) has a voltage gain approximately equal to 1.
+
+Q: For a CC amplifier, if IE = 2mA, then re = ?
+A) 5 Ω
+B) 12.5 Ω
+C) 25 Ω
+D) 50 Ω
+Answer: B
+Explanation: re = 25mV / IE = 25mV / 2mA = 12.5 Ω.
+
+Q: For a CC amplifier: β=100, RE=1kΩ, RB=100kΩ. Input impedance ≈ ?
+A) 5 kΩ
+B) 12 kΩ
+C) 100 Ω
+D) 50 kΩ
+Answer: D
+Explanation: Zin = RB ∥ β·RE = 100k ∥ (100×1k) = 100k ∥ 100k = 50 kΩ.
+
+Q: For a CC amplifier, if RE >> re, Av is:
+A) 0
+B) ≈ 1
+C) β
+D) −β
+Answer: B
+Explanation: Av = RE/(RE + re). If RE >> re, then Av ≈ 1.
+
+Q: For a CC amplifier, if RE = 1kΩ and re = 10Ω, Av ≈ ?
+A) 0
+B) ≈ 1
+C) β
+D) −β
+Answer: B
+Explanation: Av = 1000/1010 = 0.99 ≈ 1.
+
+Q: Output impedance of CC approximately:
+A) RC
+B) β·re
+C) re ∥ RE
+D) RB
+Answer: C
+Explanation: The output impedance of a CC amplifier is approximately re ∥ RE.
+
+Q: For a CC amplifier, if re = 10Ω and RE = 1kΩ, Zout ≈ ?
+A) 10 Ω
+B) 10 kΩ
+C) 100 Ω
+D) 100 kΩ
+Answer: A
+Explanation: Zout ≈ re ∥ RE ≈ 10 Ω (since re << RE).
+
+Q: CC amplifier provides:
+A) High voltage gain
+B) High current gain
+C) Phase inversion
+D) Low input impedance
+Answer: B
+Explanation: CC amplifier has Av ≈ 1 but provides high current gain (Ai ≈ β + 1).
+
+Q: Phase difference between input & output in CC:
+A) 180°
+B) 90°
+C) 0°
+D) 45°
+Answer: C
+Explanation: CC amplifier has no phase inversion — the phase difference is 0°.
+
+Q: For CC amplifier: β=50, RE=2kΩ, RB=200kΩ. Find Zin:
+A) 66.7 kΩ
+B) 200 kΩ
+C) 2 kΩ
+D) 120 kΩ
+Answer: A
+Explanation: β·RE = 50×2k = 100kΩ. Zin = 200k ∥ 100k = 66.7 kΩ.
+
+Q: If IE = 1mA → re = ?
+A) 1 kΩ
+B) 10 Ω
+C) 25 Ω
+D) 250 Ω
+Answer: C
+Explanation: re = 25mV / 1mA = 25 Ω.
+
+Q: If RE = 500Ω, re = 25Ω → Av ≈ ?
+A) 0.95
+B) 100
+C) 1
+D) 0.85
+Answer: A
+Explanation: Av = RE/(RE + re) = 500/525 ≈ 0.95.
+
+Q: CC is mainly used as:
+A) Voltage amplifier
+B) RF amplifier
+C) Buffer
+D) None of these
+Answer: C
+Explanation: CC amplifier is mainly used as a buffer (impedance matching) due to high Zin and low Zout.
+
+Q: Current gain of CC ≈
+A) β + 1
+B) β
+C) 1/β
+D) α
+Answer: A
+Explanation: The current gain of a common collector amplifier is approximately β + 1.
+
+Q: For CC amplifier, if β = 100 → Ai ≈
+A) 100
+B) 101
+C) 90
+D) 0.01
+Answer: B
+Explanation: Ai ≈ β + 1 = 100 + 1 = 101.
+
+Q: For CC amplifier, increasing RE makes Av:
+A) Closer to 0
+B) 100
+C) Closer to 1
+D) Closer to 2
+Answer: C
+Explanation: Av = RE/(RE + re). As RE increases, the ratio approaches 1.
+
+Q: In CC, if RB is very small → Zin becomes:
+A) High
+B) Small
+C) Zero
+D) Equal β
+Answer: B
+Explanation: Zin = RB ∥ β·RE. If RB is very small, Zin ≈ RB, which is small.
+
+Q: CC has ______ output impedance.
+A) High
+B) Low
+C) Moderate
+D) Zero
+Answer: B
+Explanation: CC amplifier has low output impedance (≈ re), which is one of its key features.
+
+Q: If RE = 5kΩ and re = 20Ω → Av ≈ ?
+A) 10
+B) 0
+C) 100
+D) 0.996
+Answer: D
+Explanation: Av = 5000/5020 = 0.996 ≈ 1.
+
+Q: For CC, if IE increases → re:
+A) Decreases
+B) Increases
+C) Not affected
+D) Zero
+Answer: A
+Explanation: re = 25mV/IE. As IE increases, re decreases.
+
+Q: For CC, if β doubles, Zin:
+A) Decreases
+B) Increases
+C) Not affected
+D) Zero
+Answer: B
+Explanation: Zin = RB ∥ β·RE. If β doubles, β·RE doubles, so Zin increases.
+
+Q: Best configuration for impedance matching:
+A) CB
+B) CE
+C) CC
+D) None of them
+Answer: C
+Explanation: CC has high Zin and low Zout, making it ideal for impedance matching.
+
+Q: For CC, if re = 5Ω, RE = 100Ω → Zout ≈
+A) 100 Ω
+B) 10 Ω
+C) 5 Ω
+D) Zero
+Answer: C
+Explanation: Zout ≈ re ∥ RE ≈ 5 Ω (since re << RE).
+
+Q: CB voltage gain formula:
+A) RC / re
+B) α
+C) −α
+D) re
+Answer: A
+Explanation: The voltage gain of the Common Base amplifier is Av = RC / re.
+
+Q: For CB, if IE = 1mA → re =
+A) Zero
+B) 25 kΩ
+C) 1 kΩ
+D) 25 Ω
+Answer: D
+Explanation: re = 25mV / IE = 25mV / 1mA = 25 Ω.
+
+Q: If RC = 2kΩ, re = 20Ω → Av = ?
+A) Zero
+B) 100
+C) 20
+D) 1
+Answer: B
+Explanation: Av = RC/re = 2000/20 = 100.
+
+Q: CB input impedance ≈
+A) β·re
+B) RC
+C) re
+D) RB
+Answer: C
+Explanation: The input impedance of a CB amplifier is approximately re (very low).
+
+Q: For CB, if RC = 5kΩ and re = 25Ω → Av = ?
+A) 100
+B) 200
+C) 1
+D) 0.2
+Answer: B
+Explanation: Av = RC/re = 5000/25 = 200.
+
+Q: CB with β = 100, current gain ≈
+A) 100
+B) 10
+C) 0.1
+D) 0.99
+Answer: D
+Explanation: α = β/(β+1) = 100/101 = 0.99. CB current gain ≈ α ≈ 0.99.
+
+Q: CB output impedance ≈
+A) re ∥ RE
+B) RC
+C) RB ∥ β·RE
+D) Zb
+Answer: B
+Explanation: The output impedance of a CB amplifier is approximately RC.
+
+Q: Phase shift in CB:
+A) 0°
+B) 180°
+Answer: A
+Explanation: Common Base has no phase inversion — the phase shift is 0°.
+
+Q: If RC increases → Av (for CB, Av = RC/re):
+A) Does not change
+B) Decreases
+C) Increases
+D) Av = 1
+Answer: C
+Explanation: Since Av = RC/re, increasing RC directly increases Av.
+
+Q: If IE increases → re decreases → Av (for CB):
+A) Does not change
+B) Decreases
+C) Increases
+D) Av = 1
+Answer: C
+Explanation: If re decreases, then Av = RC/re increases.
+
+Q: If IE = 5mA → re = ?
+A) 5 Ω
+B) 50 Ω
+C) 0.5 Ω
+D) 1 kΩ
+Answer: A
+Explanation: re = 25mV / 5mA = 5 Ω.
+
+Q: For CB, if RC = 3kΩ, IE = 5mA, then Av = ?
+A) 600
+B) 1
+C) 1500
+D) 100
+Answer: A
+Explanation: re = 25mV/5mA = 5Ω. Av = RC/re = 3000/5 = 600.
+
+Q: CB is suitable for:
+A) High-frequency applications
+B) Buffer Amplifier
+C) Voltage Amplifier
+D) All of the above
+Answer: A
+Explanation: CB is best suited for high-frequency applications due to its low Miller effect.
+
+Q: CB has ______ input impedance.
+A) High
+B) Very low
+C) Moderate
+D) Zero
+Answer: B
+Explanation: CB input impedance ≈ re, which is very low (typically 5–25 Ω).
+
+Q: If β = 50 → α = ?
+A) 100
+B) 1
+C) 0.98
+D) 1.02
+Answer: C
+Explanation: α = β/(β+1) = 50/51 ≈ 0.98.
+
+Q: CB amplifier is:
+A) Inverting
+B) Non-inverting
+Answer: B
+Explanation: CB amplifier is non-inverting — no phase shift between input and output.
+
+Q: Lowest Zin configuration:
+A) CC
+B) CE
+C) CC and CE
+D) CB
+Answer: D
+Explanation: CB has the lowest input impedance (≈ re) among BJT configurations.
+
+Q: Highest voltage gain among single BJT:
+A) CC
+B) CE
+C) CC and CE
+D) CB
+Answer: D
+Explanation: CB provides the highest voltage gain (Av = RC/re) among single BJT configurations.
+
+Q: CB current gain is:
+A) ≈ 1 but < 1
+B) ≈ 1 but > 1
+C) ≈ 100
+D) ≈ 200
+Answer: A
+Explanation: CB current gain = α = β/(β+1), which is slightly less than 1.

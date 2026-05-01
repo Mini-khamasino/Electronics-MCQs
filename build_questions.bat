@@ -1,5 +1,6 @@
 @echo off
-echo Rebuilding questions database...
-node build_questions.js
+echo Building questions from subjects/ folder...
+node build.js
 echo.
-pause
+echo Done! Press any key to close.
+pause >nul

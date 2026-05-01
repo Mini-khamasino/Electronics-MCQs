@@ -1,0 +1,10 @@
+Title: Sheet 2 Q1 — JFET Transconductance & Fixed-Bias Analysis
+Description: 1) Find gm at Q-point for JFET with IDSS=12mA, VP=-6V, VGSQ=-3V. 2) For Fixed Bias JFET: gm=2mS, RD=3kΩ, RG=1MΩ, find Zi, Zo, Av. 3) Self-Bias JFET unbypassed: gm=3mS, RD=4kΩ, RS=1kΩ, find Av.
+
+Fields:
+gm0 | mS | 4 | 0.2
+gm | mS | 2 | 0.1
+Zi | MΩ | 1 | 0.1
+Zo | kΩ | 3 | 0.1
+Av (fixed) |  | -6 | 0.3
+Av (self) |  | -3 | 0.2

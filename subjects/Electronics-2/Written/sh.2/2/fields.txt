@@ -1,0 +1,9 @@
+Title: Sheet 2 P2 Q1 — Self-Bias FET Small-Signal Analysis
+Description: Self-bias configuration: VGSQ=-2.6V, IDQ=2.6mA, IDSS=8mA, VP=-6V, yOS=20μS. Determine gm, rd, Zi, Zo, Av.
+
+Fields:
+gm | mS | 4.47 | 0.2
+rd | kΩ | 100 | 5
+Zi | MΩ | 9.17 | 0.5
+Zo | kΩ | 1.8 | 0.1
+Av |  | -8.05 | 0.5
