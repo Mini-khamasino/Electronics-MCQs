@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clean Slate — Blank Project</title>
-    <meta name="description" content="A clean, premium starting point for your web application.">
+    <title>Review Questions Platform</title>
+    <meta name="description" content="A premium learning platform for engineering questions.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -22,13 +22,16 @@
     <nav id="navbar">
         <div class="nav-left">
             <div class="logo" id="nav-logo-home" style="cursor:pointer;">
-                <span class="logo-icon">🚀</span>
-                <span class="logo-text">CleanApp</span>
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">ReviewApp</span>
             </div>
         </div>
         <div class="nav-center">
             <button class="nav-tab active" data-view="home" id="nav-home">
                 <span class="tab-icon">🏠</span> Home
+            </button>
+            <button class="nav-tab" data-view="mistakes" id="nav-mistakes">
+                <span class="tab-icon">🔁</span> Review Mistakes
             </button>
         </div>
         <div class="nav-right">
@@ -38,21 +41,108 @@
 
     <!-- Main content area -->
     <main id="app">
-        <!-- Home View -->
+        <!-- Home View: Subjects Dashboard -->
         <section id="view-home" class="view active">
-            <div class="welcome-container">
-                <h1 class="section-title">Clean Slate</h1>
-                <p class="section-subtitle">Your beautiful, empty application is ready for new content.</p>
-                
-                <div class="placeholder-card">
-                    <div class="topic-icon">✨</div>
-                    <h3>Ready to build</h3>
-                    <p>The code is stripped of all previous question and login data. You can now implement your own logic and UI components.</p>
+            <div class="header-container">
+                <h1 class="section-title">Select Subject</h1>
+                <p class="section-subtitle">Choose a subject to practice questions and review answers.</p>
+            </div>
+            <div class="grid-container" id="subjects-grid">
+                <!-- Subjects populated dynamically -->
+            </div>
+        </section>
+
+        <!-- Subject View: Categories (Chapters/Sheets) -->
+        <section id="view-subject" class="view">
+            <div class="back-nav">
+                <button class="text-btn" id="btn-back-home">← Back to Subjects</button>
+            </div>
+            <div class="header-container">
+                <h1 class="section-title" id="subject-title">Subject Name</h1>
+                <p class="section-subtitle" id="subject-desc">Subject Description</p>
+            </div>
+            <div class="grid-container" id="categories-grid">
+                <!-- Categories populated dynamically -->
+            </div>
+            
+            <div id="coming-soon-msg" class="coming-soon-container" style="display: none;">
+                <div class="topic-icon">🚧</div>
+                <h3>Coming Soon</h3>
+                <p>Questions for this subject are currently being prepared.</p>
+            </div>
+        </section>
+
+        <!-- Category View: Question List -->
+        <section id="view-category" class="view">
+            <div class="back-nav">
+                <button class="text-btn" id="btn-back-subject">← Back to <span id="back-subject-name">Subject</span></button>
+            </div>
+            <div class="header-container">
+                <h1 class="section-title" id="category-title">Category Name</h1>
+                <div class="action-bar">
+                    <button class="btn btn-primary" id="btn-practice-all">Practice All Questions</button>
                 </div>
+            </div>
+            <div class="list-container" id="questions-list">
+                <!-- Questions populated dynamically -->
+            </div>
+        </section>
+
+        <!-- Flashcard View: Single Question Practice -->
+        <section id="view-flashcard" class="view">
+            <div class="back-nav">
+                <button class="text-btn" id="btn-back-category">← Back to List</button>
+                <div class="progress-indicator">Question <span id="fc-current">1</span> of <span id="fc-total">10</span></div>
+            </div>
+            
+            <div class="flashcard-container">
+                <!-- Question Side -->
+                <div class="flashcard card-front">
+                    <h3 class="flashcard-title" id="fc-title">Question Title</h3>
+                    <p class="flashcard-summary" id="fc-summary">Question summary</p>
+                    <div class="image-wrapper">
+                        <img id="fc-q-img" src="" alt="Question Image" />
+                    </div>
+                    <div class="flashcard-actions">
+                        <button class="btn btn-primary w-full" id="btn-show-answer">Show Answer</button>
+                    </div>
+                </div>
+
+                <!-- Answer Side (hidden by default) -->
+                <div class="flashcard card-back" id="fc-answer-side" style="display: none;">
+                    <h3 class="flashcard-title">Solution</h3>
+                    <div class="image-wrapper">
+                        <img id="fc-a-img" src="" alt="Answer Image" />
+                    </div>
+                    <div class="self-assess-actions">
+                        <p>How did you do?</p>
+                        <div class="btn-group">
+                            <button class="btn btn-danger" id="btn-mark-review">Needs Review</button>
+                            <button class="btn btn-success" id="btn-mark-gotit">Got It!</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Review Mistakes View -->
+        <section id="view-mistakes" class="view">
+            <div class="header-container">
+                <h1 class="section-title">Review Mistakes</h1>
+                <p class="section-subtitle">Practice the questions you previously marked for review.</p>
+            </div>
+            <div class="list-container" id="mistakes-list">
+                <!-- Mistake Questions populated dynamically -->
+            </div>
+            <div id="no-mistakes-msg" class="placeholder-card" style="display: none;">
+                <div class="topic-icon">🎉</div>
+                <h3>All Caught Up!</h3>
+                <p>You don't have any questions marked for review right now.</p>
             </div>
         </section>
     </main>
 
+    <script src="data.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
