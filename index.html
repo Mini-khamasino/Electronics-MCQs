@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MultiQuiz — MCQ Practice Platform</title>
-    <meta name="description" content="Interactive MCQ practice app for multiple subjects. Instant feedback and revision mode.">
+    <title>Clean Slate — Blank Project</title>
+    <meta name="description" content="A clean, premium starting point for your web application.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -18,29 +18,17 @@
         <div class="blob blob-3"></div>
     </div>
 
-
-
     <!-- Top navigation bar -->
     <nav id="navbar">
         <div class="nav-left">
             <div class="logo" id="nav-logo-home" style="cursor:pointer;">
-                <span class="logo-icon">🎓</span>
-                <span class="logo-text">MultiQuiz</span>
+                <span class="logo-icon">🚀</span>
+                <span class="logo-text">CleanApp</span>
             </div>
         </div>
         <div class="nav-center">
             <button class="nav-tab active" data-view="home" id="nav-home">
                 <span class="tab-icon">🏠</span> Home
-            </button>
-            <button class="nav-tab" data-view="practice" id="nav-practice" style="display:none;">
-                <span class="tab-icon">📝</span> Practice
-            </button>
-            <button class="nav-tab" data-view="review" id="nav-review">
-                <span class="tab-icon">🔄</span> Review Mistakes
-                <span class="badge" id="mistakes-badge" style="display:none;">0</span>
-            </button>
-            <button class="nav-tab" data-view="stats" id="nav-stats">
-                <span class="tab-icon">📊</span> Stats
             </button>
         </div>
         <div class="nav-right">
@@ -50,231 +38,21 @@
 
     <!-- Main content area -->
     <main id="app">
-
-        <!-- ==================== HOME VIEW (Subject Selection) ==================== -->
+        <!-- Home View -->
         <section id="view-home" class="view active">
-            <div class="subject-selector">
-                <h1 class="section-title">Welcome Back!</h1>
-                <p class="section-subtitle">Select a subject to begin your practice session</p>
-                <div class="subject-grid" id="subject-grid">
-                    <!-- Subjects will be injected here -->
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================== PRACTICE VIEW ==================== -->
-        <section id="view-practice" class="view">
-            <!-- Topic selector -->
-            <div class="topic-selector" id="topic-selector">
-                <div class="view-header">
-                    <button class="back-btn" id="back-to-subjects">
-                        <span>←</span> Subjects
-                    </button>
-                    <div class="subject-header-info">
-                        <h1 class="section-title" id="current-subject-name">Subject Name</h1>
-                        <p class="section-subtitle" id="current-subject-desc">Subject description goes here</p>
-                    </div>
-                </div>
-
-                <!-- Mode toggle for MCQ / Calculations / Written -->
-                <div class="mode-toggle" id="mode-toggle" style="display:none;">
-                    <button class="mode-btn active" id="mode-mcq" data-mode="mcq">📝 MCQs</button>
-                    <button class="mode-btn" id="mode-calc" data-mode="calc">🧮 Problems & Written</button>
-                </div>
-
-                <div class="topic-grid" id="topic-grid">
-                    <!-- Topics will be injected here -->
-                </div>
-
-                <!-- Calc topic grid (separate, shown when calc mode active) -->
-                <div class="topic-grid" id="calc-topic-grid" style="display:none;">
-                    <!-- Calc topics injected here -->
-                </div>
-            </div>
-
-            <!-- MCQ Quiz area (hidden initially) -->
-            <div class="quiz-area" id="quiz-area" style="display:none;">
-                <div class="quiz-header">
-                    <button class="back-btn" id="back-to-topics">
-                        <span>←</span> Topics
-                    </button>
-                    <div class="quiz-progress-bar">
-                        <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
-                    </div>
-                    <div class="quiz-counter" id="quiz-counter">1 / 42</div>
-                </div>
-
-                <div class="question-card" id="question-card">
-                    <div class="question-number" id="question-number">Question 1</div>
-                    <h2 class="question-text" id="question-text"></h2>
-                    <div class="options-list" id="options-list"></div>
-                    <div class="feedback-bar" id="feedback-bar" style="display:none;">
-                        <div class="feedback-icon" id="feedback-icon"></div>
-                        <div class="feedback-text" id="feedback-text"></div>
-                    </div>
-                </div>
-
-                <div class="quiz-nav">
-                    <button class="btn btn-secondary" id="btn-prev" disabled>← Previous</button>
-                    <button class="btn btn-primary" id="btn-next">Next →</button>
-                </div>
-
-                <!-- Results screen -->
-                <div class="results-screen" id="results-screen" style="display:none;">
-                    <div class="results-card">
-                        <div class="results-emoji" id="results-emoji">🎉</div>
-                        <h2 class="results-title" id="results-title">Quiz Complete!</h2>
-                        <div class="results-score">
-                            <div class="score-circle" id="score-circle">
-                                <svg viewBox="0 0 120 120">
-                                    <circle class="score-bg" cx="60" cy="60" r="52"></circle>
-                                    <circle class="score-fill" id="score-fill" cx="60" cy="60" r="52"></circle>
-                                </svg>
-                                <span class="score-text" id="score-text">0%</span>
-                            </div>
-                        </div>
-                        <div class="results-stats">
-                            <div class="stat-item correct">
-                                <span class="stat-num" id="stat-correct">0</span>
-                                <span class="stat-label">Correct</span>
-                            </div>
-                            <div class="stat-item wrong">
-                                <span class="stat-num" id="stat-wrong">0</span>
-                                <span class="stat-label">Wrong</span>
-                            </div>
-                            <div class="stat-item skipped">
-                                <span class="stat-num" id="stat-skipped">0</span>
-                                <span class="stat-label">Skipped</span>
-                            </div>
-                        </div>
-                        <div class="results-actions">
-                            <button class="btn btn-secondary" id="btn-review-mistakes">Review Mistakes</button>
-                            <button class="btn btn-primary" id="btn-retry">Try Again</button>
-                            <button class="btn btn-ghost" id="btn-back-home">Back to Topics</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ==================== CALCULATION QUIZ AREA ==================== -->
-            <div class="calc-quiz-area" id="calc-quiz-area" style="display:none;">
-                <div class="quiz-header">
-                    <button class="back-btn" id="calc-back-to-topics">
-                        <span>←</span> Topics
-                    </button>
-                    <div class="quiz-progress-bar">
-                        <div class="quiz-progress-fill" id="calc-progress-fill"></div>
-                    </div>
-                    <div class="quiz-counter" id="calc-counter">1 / 4</div>
-                </div>
-
-                <div class="calc-question-card" id="calc-question-card">
-                    <div class="question-number" id="calc-question-number">Problem 1</div>
-                    <h2 class="question-text" id="calc-question-title"></h2>
-                    <p class="calc-description" id="calc-description"></p>
-
-                    <!-- Question screenshot -->
-                    <div class="calc-image-container" id="calc-question-img-container">
-                        <img id="calc-question-img" src="" alt="Question diagram" class="calc-image" />
-                    </div>
-
-                    <!-- Input fields for each required value -->
-                    <div class="calc-fields" id="calc-fields">
-                        <!-- Fields injected dynamically -->
-                    </div>
-
-                    <div class="calc-actions">
-                        <button class="btn btn-primary" id="calc-submit">✅ Submit Answer</button>
-                        <button class="btn btn-secondary" id="calc-show-solution" style="display:none;">📖 View Solution</button>
-                    </div>
-
-                    <!-- Solution screenshots (shown after submit) -->
-                    <div class="calc-solution-container" id="calc-solution-container" style="display:none;">
-                        <h3 class="calc-solution-title">📋 Full Solution</h3>
-                        <div id="calc-solution-imgs">
-                            <!-- Solution images injected here -->
-                        </div>
-                    </div>
-
-                    <!-- Feedback -->
-                    <div class="calc-feedback" id="calc-feedback" style="display:none;">
-                        <div class="calc-feedback-header" id="calc-feedback-header"></div>
-                        <div class="calc-feedback-details" id="calc-feedback-details"></div>
-                    </div>
-                </div>
-
-                <div class="quiz-nav">
-                    <button class="btn btn-secondary" id="calc-prev" disabled>← Previous</button>
-                    <button class="btn btn-primary" id="calc-next">Next →</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================== REVIEW VIEW ==================== -->
-        <section id="view-review" class="view">
-            <div class="review-container">
-                <h1 class="section-title">Review Mistakes</h1>
-                <p class="section-subtitle" id="review-subtitle">Questions you got wrong are saved here for revision</p>
+            <div class="welcome-container">
+                <h1 class="section-title">Clean Slate</h1>
+                <p class="section-subtitle">Your beautiful, empty application is ready for new content.</p>
                 
-                <div class="review-controls">
-                    <button class="btn btn-primary" id="btn-practice-mistakes" style="display:none;">
-                        🔄 Practice All Mistakes
-                    </button>
-                    <button class="btn btn-danger" id="btn-clear-mistakes" style="display:none;">
-                        🗑️ Clear All
-                    </button>
-                </div>
-
-                <div class="review-list" id="review-list">
-                    <div class="empty-state" id="review-empty">
-                        <div class="empty-icon">✅</div>
-                        <h3>No mistakes yet!</h3>
-                        <p>Start practicing and any wrong answers will appear here for revision.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================== STATS VIEW ==================== -->
-        <section id="view-stats" class="view">
-            <div class="stats-container">
-                <h1 class="section-title">Your Statistics</h1>
-                <p class="section-subtitle">Track your learning progress across all subjects</p>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-card-icon">📝</div>
-                        <div class="stat-card-value" id="total-attempted">0</div>
-                        <div class="stat-card-label">Questions Attempted</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-card-icon">✅</div>
-                        <div class="stat-card-value" id="total-correct">0</div>
-                        <div class="stat-card-label">Correct Answers</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-card-icon">📈</div>
-                        <div class="stat-card-value" id="overall-accuracy">0%</div>
-                        <div class="stat-card-label">Overall Accuracy</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-card-icon">🔥</div>
-                        <div class="stat-card-value" id="best-streak">0</div>
-                        <div class="stat-card-label">Best Streak</div>
-                    </div>
-                </div>
-
-                <h2 class="subsection-title">Subject Breakdown</h2>
-                <div class="topic-stats" id="subject-stats"></div>
-
-                <div class="stats-actions">
-                    <button class="btn btn-danger" id="btn-reset-stats">🗑️ Reset All Data</button>
+                <div class="placeholder-card">
+                    <div class="topic-icon">✨</div>
+                    <h3>Ready to build</h3>
+                    <p>The code is stripped of all previous question and login data. You can now implement your own logic and UI components.</p>
                 </div>
             </div>
         </section>
     </main>
 
-    <script src="subjects.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

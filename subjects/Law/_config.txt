@@ -1,3 +1,0 @@
-Name: Law & Human Rights
-Icon: ⚖️
-Description: Legal principles and human rights regulations

@@ -1,7 +1,0 @@
-Q: [Your true/false statement here].
-Answer: True
-Explanation: [Why it's true]
-
-Q: [Another statement].
-Answer: False
-Explanation: [Why it's false]

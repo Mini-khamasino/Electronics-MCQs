@@ -1,3 +1,0 @@
-Name: Electronics II
-Icon: ⚡
-Description: BJT, FET, MOSFET and Amplifier analysis
