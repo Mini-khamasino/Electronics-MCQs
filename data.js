@@ -88,6 +88,13 @@ const SUBJECTS = [
         type: "chapter",
         questions: [
           {
+            id: "ec-2.5",
+            label: "Example 2.5",
+            questionImg: "Electronic circuits/Written Questions/2.5.png",
+            answerImg: ["Electronic circuits/Written Questions/2.5A.png"],
+            summary: "E-MOSFET: Determine gₘ, rₐ, Zᵢ, Zₒ, Aᵥ (k=0.24mA/V², V_GSQ=6.4V)"
+          },
+          {
             id: "ec-2.6",
             label: "Example 2.6",
             questionImg: "Electronic circuits/Written Questions/2.6.png",
